@@ -7,7 +7,7 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Bookings', {
+    return queryInterface.createTable('SpotImages', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -17,29 +17,26 @@ module.exports = {
       spotId: {
         type: Sequelize.INTEGER
       },
-      userId: {
-        type: Sequelize.INTEGER
+      url: {
+        type: Sequelize.STRING
       },
-      startDate: {
-        type: Sequelize.DATE
-      },
-      endDate: {
-        type: Sequelize.DATE
+      preview: {
+        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValues: Sequelize.literal("CURRENT_TIMESTAMP")
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP")
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValues: Sequelize.literal("CURRENT_TIMESTAMP")
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP")
       }
     });
   },
   down: async (queryInterface, Sequelize) => {
-    options.tableName = "Bookings";
+    options.tableName = "SpotImages";
     return queryInterface.dropTable(options);
   }
 };
