@@ -42,7 +42,7 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP")
       }
-    });
+    }, options);
   },
   down: async (queryInterface, Sequelize) => {
     options.tableName = "Reviews";
