@@ -24,15 +24,11 @@ module.exports = (sequelize, DataTypes) => {
     userId: DataTypes.INTEGER,
     startDate: {
       type: DataTypes.DATE,
-      validate: {
-        isDate: true
-      }
+      allowNull: false
     },
     endDate: {
       type: DataTypes.DATE,
-      validate: {
-        isDate: true
-      }
+      allowNull: false
     }
   }, {
     sequelize,
