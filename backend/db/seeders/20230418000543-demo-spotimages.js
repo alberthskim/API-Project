@@ -10,67 +10,67 @@ module.exports = {
     options.tableName = 'SpotImages';
     return queryInterface.bulkInsert(options, [
       {
-        SpotId: 1,
+        spotId: 1,
         url: 'https://image.com/gallery',
         preview: true
       },
       {
-        SpotId: 2,
+        spotId: 2,
         url: 'https://image.com/gallery',
         preview: true
       },
       {
-        SpotId: 3,
+        spotId: 3,
         url: 'https://image.com/gallery',
         preview: true
       },
       {
-        SpotId: 4,
+        spotId: 4,
         url: 'https://image.com/gallery',
         preview: true
       },
       {
-        SpotId: 5,
+        spotId: 5,
         url: 'https://image.com/gallery',
         preview: true
       },
       {
-        SpotId: 6,
+        spotId: 6,
         url: 'https://image.com/gallery',
         preview: true
       },
       {
-        SpotId: 7,
+        spotId: 7,
         url: 'https://image.com/gallery',
         preview: true
       },
       {
-        SpotId: 8,
+        spotId: 8,
         url: 'https://image.com/gallery',
         preview: true
       },
       {
-        SpotId: 9,
+        spotId: 9,
         url: 'https://image.com/gallery',
         preview: true
       },
       {
-        SpotId: 10,
+        spotId: 10,
         url: 'https://image.com/gallery',
         preview: true
       },
       {
-        SpotId: 11,
+        spotId: 11,
         url: 'https://image.com/gallery',
         preview: true
       },
       {
-        SpotId: 12,
+        spotId: 12,
         url: 'https://image.com/gallery',
         preview: true
       },
       {
-        SpotId: 13,
+        spotId: 13,
         url: 'https://image.com/gallery',
         preview: true
       }
