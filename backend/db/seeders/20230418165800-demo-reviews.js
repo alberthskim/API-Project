@@ -10,12 +10,6 @@ module.exports = {
     options.tableName = 'Reviews';
     return queryInterface.bulkInsert(options, [
       {
-        spotId: 3,
-        userId: 1,
-        review: 'Fresh Air? Nah, FRESH FISH SMELL!',
-        stars: 3
-      },
-      {
         spotId: 4,
         userId: 1,
         review: 'AWESOME STAY!! I gained so much muscles and became a warrior!',
@@ -94,16 +88,22 @@ module.exports = {
         stars: 4
       },
       {
-        spotId: 13,
+        spotId: 3,
         userId: 6,
-        review: 'They called me out for eating TOO MUCH. I was only just trying to feed my crew.',
-        stars: 2
+        review: 'Fresh Air? Nah, FRESH FISH SMELL!',
+        stars: 3
       },
       {
         spotId: 11,
         userId: 6,
         review: 'The PilotHouse looks exactly like my ship!',
         stars: 5
+      },
+      {
+        spotId: 13,
+        userId: 6,
+        review: 'They called me out for eating TOO MUCH. I was only just trying to feed my crew.',
+        stars: 2
       }
     ], {});
   },
