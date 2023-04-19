@@ -451,7 +451,6 @@ router.get('/:spotId/bookings', requireAuth, async (req, res) => {
     if(spot.ownerId !== user.id) {
         const bookings = await Booking.findAll({
             where: {
-                userId: user.id,
                 spotId: spot.id
             },
             attributes: ['spotId', 'startDate', 'endDate']
@@ -494,11 +493,20 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
         }
     })
 
-    const newBooking = await Booking.create({
-        startDate,
-        endDate,
 
+
+
+
+
+    const newBooking = await Booking.create({
+        spotId: spot.id,
+        userId: user.id,
+        startDate,
+        endDate
     })
+
+    return res.json(newBooking)
+
 })
 
 
