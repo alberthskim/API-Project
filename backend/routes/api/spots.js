@@ -436,7 +436,7 @@ router.post('/:spotId/reviews', requireAuth, async (req, res) => {
 })
 
 
-//Get all Bookings for a Spot based on the Spot's id - NOT DONE
+//Get all Bookings for a Spot based on the Spot's id - DONE
 router.get('/:spotId/bookings', requireAuth, async (req, res) => {
     const user = req.user
     const spot = await Spot.findByPk(req.params.spotId);
@@ -451,7 +451,7 @@ router.get('/:spotId/bookings', requireAuth, async (req, res) => {
     if(spot.ownerId !== user.id) {
         const bookings = await Booking.findAll({
             where: {
-                spotId: spot.id
+                spotId: req.params.spotId
             },
             attributes: ['spotId', 'startDate', 'endDate']
         })
@@ -463,12 +463,15 @@ router.get('/:spotId/bookings', requireAuth, async (req, res) => {
     if(spot.ownerId === user.id) {
         const bookings = await Booking.findAll({
             where: {
-                userId: user.id,
-                spotId: spot.id
-            }
+                spotId: req.params.spotId
+            },
+            include: [{
+                model: User,
+                attributes: ['id', 'firstName', 'lastName']
+            }]
         })
         return res.json({
-            Booking: bookings
+            Bookings: bookings
         })
     }
 })
@@ -478,8 +481,10 @@ router.get('/:spotId/bookings', requireAuth, async (req, res) => {
 router.post('/:spotId/bookings', requireAuth, async (req, res) => {
     const user = req.user
     let { startDate, endDate } = req.body;
+    // let currentDate = Date()
     const spot = await Spot.findByPk(req.params.spotId);
 
+    //Non-existent Spot error -GOOD TO GO
     if(!spot) {
         res.status(404)
         return res.json({
@@ -487,15 +492,61 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
         })
     }
 
+    //If Owner owns the spot - GOOD TO GO
+    if(spot.ownerId === user.id) {
+        res.status(403)
+        return res.json({
+            message: "Owner cannot book its own spot"
+        })
+    }
+    let errors = {
+        endDate: 'endDate cannot be on or before startDate'
+    }
+
+    //If end date is before start date - GOOD TO GO
+    if (endDate <= startDate) {
+        res.status(400);
+        return res.json({
+            message: "Bad Request",
+            errors: errors
+        })
+    }
+
+    //fix this so that you can't add a date in the passed
+    // if((currentDate > startDate) && (currentDate > endDate)) {
+    //     res.status(403);
+    //     return res.json({
+    //         message: "Cannot book a spot with a date that has passed!"
+    //     })
+    // }
+
     const bookings = await Booking.findAll({
         where: {
             spotId: spot.id
         }
     })
 
+    let bookingErrors = {}
 
+    for(let booking of bookings) {
+        if ((booking.startDate <= startDate) && (booking.endDate >= startDate) || (booking.startDate <= endDate) && (booking.endDate >= endDate)) {
+            bookingErrors.startDate = "Start date conflicts with an existing booking"
+            bookingErrors.endDate = "End date conflicts with an existing booking"
+            break;
+        }
+        if ((booking.startDate >= startDate) && (booking.endDate <= endDate)) {
+            bookingErrors.exist = "A booking exists between your start and end date"
+            break;
+        }
+    }
 
-
+    if(Object.keys(bookingErrors).length) {
+        res.status(403);
+        return res.json({
+            message: "Sorry, this spot is already booked for the specified dates",
+            errors: bookingErrors
+        })
+    }
 
 
     const newBooking = await Booking.create({
