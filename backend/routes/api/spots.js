@@ -7,7 +7,7 @@ const { requireAuth } = require('../../utils/auth');
 const { Op } = require('sequelize');
 
 
-//get all spots owned by the Current User
+//get all spots owned by the Current User - DONE
 router.get('/current', requireAuth, async(req, res) => {
     const spots = await Spot.findAll({
         where: {
@@ -49,7 +49,7 @@ router.get('/current', requireAuth, async(req, res) => {
     res.json({Spots: allSpots});
 });
 
-//get details of a spot from an id
+//get details of a spot from an id - DONE
 router.get('/:spotId', async(req, res) => {
     const spot = await Spot.findByPk(req.params.spotId, {
         include: [{
@@ -91,7 +91,7 @@ router.get('/:spotId', async(req, res) => {
     res.json(detailSpot);
 })
 
-//get all spots
+//get all spots - NOT DONE
 router.get('/', async (req, res) => {
     //Do Pagination Today!
     let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
@@ -168,20 +168,178 @@ router.get('/', async (req, res) => {
     res.json({Spots: allSpots, page, size})
 })
 
-//create a spot
+//create a spot - DONE
 router.post('/', requireAuth, async (req, res) => {
+    let { address, city, state, country, lat, lng, name, description, price} = req.body;
+
+    let errors = {}
+
+    if (!address) {
+        errors.address = "Street address is required"
+    }
+    if (!city) {
+        errors.city = "City is required"
+    }
+    if (!state) {
+        errors.state = "State is required"
+    }
+    if (!country) {
+        errors.country = "Country is required"
+    }
+    if (!lat || typeof lat !== "number") {
+        errors.lat = "Latitude is not valid"
+    }
+    if (!lng || typeof lng !== "number") {
+        errors.lng = "Longitude is not valid"
+    }
+    if (!name || name.length > 50) {
+        errors.name = "Name must be less than 50 characters"
+    }
+    if (!description) {
+        errors.description = "Description is required"
+    }
+    if (!price || typeof price !== "number") {
+        errors.price = "Price per day is required"
+    }
+
+    if (Object.keys(errors).length) {
+        res.status(400);
+        return res.json({
+            message: "Bad Request",
+            errors: errors
+        })
+    }
+    const newSpot = await Spot.create({
+        ownerId: req.user.id,
+        address,
+        city,
+        state,
+        country,
+        lat,
+        lng,
+        name,
+        description,
+        price
+    })
+
+
+    res.status(201);
+    return res.json(newSpot)
+
 })
 
-//Add an image to a Spot based on the Spot's id
+//Add an image to a Spot based on the Spot's id - DONE
 router.post('/:spotId/images', requireAuth, async (req, res) => {
+    const user = req.user
+    const {url, preview} = req.body;
+
+    const spot = await Spot.findByPk(req.params.spotId);
+
+    //check to see if it matches the owner
+    if(!spot || spot.ownerId !== user.id) {
+        res.status(404);
+        return res.json({
+            message: "Spot couldn't be found"
+        })
+    }
+
+    const addImage = await SpotImage.create({
+        url,
+        preview
+    })
+
+    return res.json({
+        id: addImage.id,
+        url: addImage.url,
+        preview: addImage.preview
+    })
 })
 
-//Edit a Spot
+//Edit a Spot - DONE
 router.put('/:spotId', requireAuth, async (req, res) => {
+    const user = req.user
+    console.log(user.id);
+    let { address, city, state, country, lat, lng, name, description, price } = req.body;
+    const spot = await Spot.findByPk(req.params.spotId)
+
+    if (!spot || spot.ownerId !== user.id) {
+        res.status(404)
+        return res.json({
+            message: "Spot couldn't be found"
+        })
+    }
+
+    let errors = {}
+
+    if(!address) {
+        errors.address = "Street address is required"
+    }
+    if(!city) {
+        errors.city = "City is required"
+    }
+    if(!state) {
+        errors.state = "State is required"
+    }
+    if(!country) {
+        errors.country = "Country is required"
+    }
+    if(!lat || typeof lat !== "number") {
+        errors.lat = "Latitude is not valid"
+    }
+    if(!lng || typeof lng !== "number") {
+        errors.lng = "Longitude is not valid"
+    }
+    if(!name || name.length > 50) {
+        errors.name = "Name must be less than 50 characters"
+    }
+    if(!description) {
+        errors.description = "Description is required"
+    }
+    if(!price || typeof price !== "number") {
+        errors.price = "Price per day is required"
+    }
+
+    if(Object.keys(errors).length) {
+        res.status(400);
+        return res.json({
+            message: "Bad Request",
+            errors: errors
+        })
+    }
+
+
+    spot.address = address;
+    spot.city = city;
+    spot.state = state;
+    spot.country = country;
+    spot.lat = lat;
+    spot.lng = lng;
+    spot.name = name;
+    spot.description = description;
+    spot.price = price;
+
+    await spot.save()
+
+    res.json(spot);
 })
 
-//Delete a Spot
+//Delete a Spot - DONE
 router.delete('/:spotId', requireAuth, async (req, res) => {
+    const user = req.user
+    const spot = await Spot.findByPk(req.params.spotId)
+
+    if(!spot || spot.ownerId !== user.id) {
+        res.status(404)
+        return res.json({
+            message: "Spot couldn't be found"
+        })
+    }
+
+    spot.destroy()
+
+    return res.json({
+        message: "Successfully deleted"
+    })
 })
 
 //Get all Reviews By a Spot's id
