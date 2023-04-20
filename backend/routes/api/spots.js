@@ -498,6 +498,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
             message: "Owner cannot book its own spot"
         })
     }
+    
     let errors = {
         endDate: 'endDate cannot be on or before startDate'
     }
