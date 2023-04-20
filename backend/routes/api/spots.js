@@ -384,7 +384,6 @@ router.post('/:spotId/reviews', requireAuth, async (req, res) => {
         }
     })
 
-    console.log(userReview)
 
     if(!spot) {
         res.status(404);
@@ -477,7 +476,7 @@ router.get('/:spotId/bookings', requireAuth, async (req, res) => {
 })
 
 
-//Create a Booking from a Spot based on the Spot's id - NOT DONE
+//Create a Booking from a Spot based on the Spot's id - DONE but create custom error
 router.post('/:spotId/bookings', requireAuth, async (req, res) => {
     const user = req.user
     let { startDate, endDate } = req.body;
