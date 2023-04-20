@@ -93,35 +93,82 @@ router.get('/:spotId', async(req, res) => {
 
 //get all spots - NOT DONE
 router.get('/', async (req, res) => {
-    //Do Pagination Today!
     let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
+
+    let where = {}
 
     page = parseInt(page);
     size = parseInt(size);
 
-    if(!Number.isInteger(page) || page > 10) page = 1;
-    if(!Number.isInteger(size) || size > 20) size = 20;
+    if(!page) page = 1;
+    if(page > 10) page = 10;
+    if(!size || size > 20) size = 20;
 
-    if(page <= 0) {
+    let errors = {}
+
+    if (page < 1) {
+        errors.page = "Page must be greater than or equal to 1"
+    }
+
+    if (size < 1) {
+        errors.size = "Size must be greater than or equal to 1"
+    }
+
+    if (maxLat) {
+        if (Number.isInteger(Number(maxLat))) {
+            errors.maxLat = "Maximum latitude is invalid"
+        }
+    }
+
+    if (minLat) {
+        if (Number.isInteger(Number(minLat))) {
+            errors.minLat = "Minimum latitude is invalid"
+        }
+    }
+
+    if (minPrice && Number(minPrice) < 0) {
+        errors.minPrice = "Minimum price must be greater than or equal to 0"
+    }
+
+    if (maxPrice && Number(maxPrice) < 0) {
+        errors.maxPrice = "Maximum price must be greater than or equal to 0"
+    }
+
+    if (Object.keys(errors).length) {
         res.status(400)
         return res.json({
             message: "Bad Request",
-            errors: {
-                page: "Page must be greater than or equal to 1",
-            }
-        })
-    }
-    if(size <= 0) {
-        res.status(400)
-        return res.json({
-            message: "Bad Request",
-            errors: {
-                size: "Size must be greater than or equal to 1"
-            }
+            errors: errors
         })
     }
 
-    //Finish rest of errors and you're done!
+    if (Number.isInteger(Number(minLat)) === 'false') {
+        where.lat = { [Op.gte]: Number(minLat)}
+        console.log("hi");
+    }
+
+    if (Number.isInteger(Number(maxLat)) === 'false') {
+        where.lat = { [Op.lte]: Number(maxLat)}
+        console.log("HELOOOOFEJAFNKAENFKEANFKEANKNFEKKEFWNKFE")
+    }
+
+    if (Number.isInteger(Number(minLng)) === 'false') {
+        where.lng = { [Op.gte]: Number(minLng)}
+    }
+
+    if (Number.isInteger(Number(minLng)) === 'false') {
+        where.lng = { [Op.lte]: Number(maxLng)}
+    }
+
+    if (Number(minPrice) && Number(minPrice) > 0) {
+        where.price = { [Op.gte]: Number(minPrice)}
+    }
+
+    if (Number(maxPrice) && Number(maxPrice) > 0) {
+        where.price = { [Op.lte]: Number(maxPrice)}
+    }
+
+
 
     let pagination = {}
 
@@ -131,14 +178,16 @@ router.get('/', async (req, res) => {
     }
 
     const spots = await Spot.findAll({
-       include: [{
+        where,
+        include: [{
             model: SpotImage
-       },
-       {
+        },
+        {
             model: Review
-       }],
-       ...pagination
+        }],
+        ...pagination
     });
+
 
     const allSpots = [];
     spots.forEach(spot => {
@@ -476,11 +525,11 @@ router.get('/:spotId/bookings', requireAuth, async (req, res) => {
 })
 
 
-//Create a Booking from a Spot based on the Spot's id - DONE but create custom error
+//Create a Booking from a Spot based on the Spot's id - DONE
 router.post('/:spotId/bookings', requireAuth, async (req, res) => {
     const user = req.user
     let { startDate, endDate } = req.body;
-    // let currentDate = Date()
+    let currentDate = Date.now()
     const spot = await Spot.findByPk(req.params.spotId);
 
     //Non-existent Spot error -GOOD TO GO
@@ -498,7 +547,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
             message: "Owner cannot book its own spot"
         })
     }
-    
+
     let errors = {
         endDate: 'endDate cannot be on or before startDate'
     }
@@ -512,13 +561,13 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
         })
     }
 
-    //fix this so that you can't add a date in the passed
-    // if((currentDate > startDate) && (currentDate > endDate)) {
-    //     res.status(403);
-    //     return res.json({
-    //         message: "Cannot book a spot with a date that has passed!"
-    //     })
-    // }
+    //you can't add a date in the passed
+    if ((Date.parse(startDate) < currentDate) || (Date.parse(endDate) < currentDate)) {
+        res.status(400);
+        return res.json({
+            message: "Cannot create a booking to a date in the past!"
+        })
+    }
 
     const bookings = await Booking.findAll({
         where: {

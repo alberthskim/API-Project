@@ -58,7 +58,7 @@ router.get('/current', requireAuth, async (req, res) => {
 
 
 
-//Edit a Booking - NOT DONE
+//Edit a Booking - DONE
 router.put('/:bookingId', requireAuth, async (req, res) => {
     const user = req.user;
     let { startDate, endDate } = req.body;
@@ -82,7 +82,7 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
         })
     }
 
-    //If end date comes before startDate - Good TO GO
+    //If end date comes before startDate - CHECK GOOD
     let errors = {
         endDate: 'endDate cannot be on or before startDate'
     }
@@ -95,13 +95,15 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
         })
     }
 
-    if ((startDate < currentDate) || (endDate < currentDate)) {
+    //CHECK GOOD!
+    if ((Date.parse(startDate) < currentDate) || (Date.parse(endDate) < currentDate)) {
         res.status(403);
         return res.json({
-            message: "Cannot edit booking to a date in the past!"
+            message: "Cannot edit booking to a date to the past!"
         })
     }
 
+    //CHECK GOOD!
     if (Date.parse(booking.endDate) < currentDate) {
         res.status(403);
         return res.json({
@@ -110,31 +112,33 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
     }
 
     const spot = await Spot.findByPk(booking.spotId)
-    console.log("This is spot", spot);
+    const allBookings = await Booking.findAll({
+        where: {
+            spotId: spot.id
+        }
+    })
+    
+    let bookingErrors = {}
 
-    // const allBookings
-    // let bookingErrors = {}
+    for(let booking of allBookings) {
+        if ((booking.startDate <= startDate) && (booking.endDate >= startDate) || (booking.startDate <= endDate) && (booking.endDate >= endDate)) {
+            bookingErrors.startDate = "Start date conflicts with an existing booking"
+            bookingErrors.endDate = "End date conflicts with an existing booking"
+            break;
+        }
+        if ((booking.startDate >= startDate) && (booking.endDate <= endDate)) {
+            bookingErrors.exist = "A booking exists between your start and end date"
+            break;
+        }
+    }
 
-    // for(let booking of bookings) {
-    //     if ((booking.startDate <= startDate) && (booking.endDate >= startDate) || (booking.startDate <= endDate) && (booking.endDate >= endDate)) {
-    //         bookingErrors.startDate = "Start date conflicts with an existing booking"
-    //         bookingErrors.endDate = "End date conflicts with an existing booking"
-    //         break;
-    //     }
-    //     if ((booking.startDate >= startDate) && (booking.endDate <= endDate)) {
-    //         bookingErrors.exist = "A booking exists between your start and end date"
-    //         break;
-    //     }
-    // }
-
-    // if(Object.keys(bookingErrors).length) {
-    //     res.status(403);
-    //     return res.json({
-    //         message: "Sorry, this spot is already booked for the specified dates",
-    //         errors: bookingErrors
-    //     })
-    // }
-
+    if(Object.keys(bookingErrors).length) {
+        res.status(403);
+        return res.json({
+            message: "Sorry, this spot is already booked for the specified dates",
+            errors: bookingErrors
+        })
+    }
 
 
     booking.startDate = startDate
@@ -146,11 +150,16 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
 })
 
 
-//Delete a Booking - DONE except Spot must belong to the current user to be able to delete
+//Delete a Booking - DONE
 router.delete('/:bookingId', requireAuth, async (req, res) => {
     const user = req.user
-    const booking = await Booking.findByPk(req.params.bookingId)
-
+    let current = Date.now()
+    const booking = await Booking.findByPk(req.params.bookingId, {
+        include: {
+            model: Spot,
+            attributes: ['ownerId']
+        }
+    })
 
     if(!booking) {
         res.status(404);
@@ -159,6 +168,19 @@ router.delete('/:bookingId', requireAuth, async (req, res) => {
         })
     }
 
+    if(Date.parse(booking.startDate) < current) {
+        res.status(403);
+        return res.json({
+            message: "Bookings that have started or passed can't be deleted!"
+        })
+    }
+
+    if(booking.Spot.ownerId === user.id) {
+        booking.destroy()
+        return res.json({
+            message: "Sucessfully deleted"
+        })
+    }
 
     if(booking.userId !== user.id) {
         res.status(403);
@@ -167,27 +189,10 @@ router.delete('/:bookingId', requireAuth, async (req, res) => {
         })
     }
 
-    if(Date.parse(booking.startDate) < Date.now()) {
-        res.status(403);
-        return res.json({
-            message: "Bookings that have started or passed can't be deleted!"
-        })
-    }
-
-    // const spot = await Spot.findByPk(booking.spotId)
-    // console.log(spot);
-
-    // checks if spot belongs to current user
-    // if(spot.spotId === user.id) {
-    //     return res.json({
-    //         message: "Spot must belong to the current user"
-    //     })
-    // }
-
     booking.destroy()
 
     return res.json({
-        message: "successfully deleted"
+        message: "Successfully deleted"
     });
 })
 
