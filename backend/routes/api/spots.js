@@ -114,25 +114,24 @@ router.get('/', async (req, res) => {
         errors.size = "Size must be greater than or equal to 1"
     }
 
-    if (maxLat) {
-        if (Number.isInteger(Number(maxLat))) {
-            errors.maxLat = "Maximum latitude is invalid"
-        }
+    if (isNaN(maxLat) && maxLat !== undefined) {
+        errors.maxLat = "Maximum latitude is invalid"
     }
 
-    if (minLat) {
-        if (Number.isInteger(Number(minLat))) {
-            errors.minLat = "Minimum latitude is invalid"
-        }
+    if (isNaN(minLat) && minLat !== undefined) {
+        errors.minLat = "Minimum latitude is invalid"
     }
 
-    if (minPrice && Number(minPrice) < 0) {
+
+    if (minPrice < 0) {
         errors.minPrice = "Minimum price must be greater than or equal to 0"
     }
 
-    if (maxPrice && Number(maxPrice) < 0) {
+
+    if (maxPrice < 0) {
         errors.maxPrice = "Maximum price must be greater than or equal to 0"
     }
+
 
     if (Object.keys(errors).length) {
         res.status(400)
@@ -142,32 +141,41 @@ router.get('/', async (req, res) => {
         })
     }
 
-    if (Number.isInteger(Number(minLat)) === 'false') {
+    if (Number(minLat)) {
         where.lat = { [Op.gte]: Number(minLat)}
-        console.log("hi");
     }
 
-    if (Number.isInteger(Number(maxLat)) === 'false') {
+    if (Number(maxLat)) {
         where.lat = { [Op.lte]: Number(maxLat)}
-        console.log("HELOOOOFEJAFNKAENFKEANFKEANKNFEKKEFWNKFE")
     }
 
-    if (Number.isInteger(Number(minLng)) === 'false') {
+    if (Number(minLat) && Number(maxLat)) {
+        where.lat = { [Op.between]: [Number(minLat), Number(maxLat)] }
+    }
+
+    if (Number(minLng)) {
         where.lng = { [Op.gte]: Number(minLng)}
     }
 
-    if (Number.isInteger(Number(minLng)) === 'false') {
+    if (Number(maxLng)) {
         where.lng = { [Op.lte]: Number(maxLng)}
     }
 
-    if (Number(minPrice) && Number(minPrice) > 0) {
+    if (Number(minLng) && Number(maxLng)) {
+        where.lng = { [Op.between]: [Number(minLng), Number(maxLng)] }
+    }
+
+    if (Number(minPrice)) {
         where.price = { [Op.gte]: Number(minPrice)}
     }
 
-    if (Number(maxPrice) && Number(maxPrice) > 0) {
+    if (Number(maxPrice)) {
         where.price = { [Op.lte]: Number(maxPrice)}
     }
 
+    if (Number(minPrice) && Number(maxPrice)) {
+        where.price = { [Op.between]: [Number(minPrice), Number(maxPrice)] }
+    }
 
 
     let pagination = {}
