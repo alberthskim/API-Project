@@ -91,7 +91,7 @@ router.get('/:spotId', async(req, res) => {
     res.json(detailSpot);
 })
 
-//get all spots - NOT DONE
+//get all spots - DONE
 router.get('/', async (req, res) => {
     let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
 
@@ -293,10 +293,17 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
     const spot = await Spot.findByPk(req.params.spotId);
 
     //check to see if it matches the owner
-    if(!spot || spot.ownerId !== user.id) {
+    if(!spot) {
         res.status(404);
         return res.json({
             message: "Spot couldn't be found"
+        })
+    }
+
+    if(spot.ownerId !== user.id) {
+        res.status(403);
+        return res.json({
+            message: "Spot must be owned by the User"
         })
     }
 
@@ -319,10 +326,17 @@ router.put('/:spotId', requireAuth, async (req, res) => {
     let { address, city, state, country, lat, lng, name, description, price } = req.body;
     const spot = await Spot.findByPk(req.params.spotId)
 
-    if (!spot || spot.ownerId !== user.id) {
+    if (!spot) {
         res.status(404)
         return res.json({
             message: "Spot couldn't be found"
+        })
+    }
+
+    if (spot.ownerId !== user.id) {
+        res.status(403)
+        return res.json({
+            message: "Spot must belong to current user"
         })
     }
 
@@ -385,10 +399,17 @@ router.delete('/:spotId', requireAuth, async (req, res) => {
     const user = req.user
     const spot = await Spot.findByPk(req.params.spotId)
 
-    if(!spot || spot.ownerId !== user.id) {
+    if(!spot) {
         res.status(404)
         return res.json({
             message: "Spot couldn't be found"
+        })
+    }
+
+    if(spot.ownerId !== user.id) {
+        res.status(403);
+        return res.json({
+            message: "Spot must be owned by current user"
         })
     }
 
