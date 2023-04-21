@@ -10,28 +10,29 @@ const { Op } = require('sequelize');
 //Delete a spot image - DONE
 router.delete('/:imageId', requireAuth, async (req, res) => {
     const user = req.user
-    const spotImage = await SpotImage.findByPk(req.params.imageId, {
+    let spotImages = await SpotImage.findByPk(req.params.imageId, {
         include: {
             model: Spot
         }
     })
 
-    if(!spotImage) {
+    console.log(spotImages)
+
+    if(!spotImages) {
         res.status(404);
         return res.json({
             message: "Spot Image couldn't be found"
         })
     }
 
-
-    if(spotImage.Spot.ownerId !== user.id) {
+    if(spotImages.Spot.ownerId !== user.id) {
         res.status(403);
         return res.json({
             message: "Spot must belong to the current user"
         })
     }
 
-    spotImage.destroy()
+    spotImages.destroy()
     return res.json({
         message: "Sucessfully deleted"
     })
