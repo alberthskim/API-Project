@@ -1,0 +1,35 @@
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+input {
+    display: flex;
+}
+
+.button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.button > button {
+    color: black;
+    font-weight: bold;
+    background-color: lightgray;
+    padding: .5rem 1rem;
+    border-radius: 1rem;
+}
+
+button:hover {
+    color: green;
+    background-color: black;
+}
