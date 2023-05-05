@@ -1,0 +1,12 @@
+.profile {
+    padding: .5rem 1rem;
+    border-radius: 2rem;
+    display: flex;
+    gap: .5rem;
+}
+
+i {
+    display: flex;
+    flex-direction: column;
+    font-size: 20px;
+}
