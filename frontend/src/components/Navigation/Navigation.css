@@ -1,0 +1,27 @@
+.hidden {
+    display: none;
+}
+
+li {
+    list-style: none;
+}
+
+ul {
+    display: flex;
+    /* flex-direction: column; */
+    width: 95%;
+    align-items: center;
+    justify-content: end;
+    margin-right: 1rem;
+    gap: 1rem;
+    /* position: fixed; */
+}
+
+.profile-dropdown {
+    /* display: flex; */
+    /* flex-direction: column; */
+    border: solid black 1px;
+    position: absolute;
+    right: 15px;
+    width: 10rem;
+}
