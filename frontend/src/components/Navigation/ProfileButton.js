@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
+import {NavLink} from "react-router-dom"
 import * as sessionActions from "../../store/session";
 import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
@@ -42,6 +43,9 @@ function ProfileButton({ user }) {
 
   return (
     <>
+      <div className="login-user-ability">
+        {user ? <NavLink to="/spots/new" className="create-link">Create A Spot</NavLink> : ""}
+      </div>
       <button onClick={openMenu} className="profile">
         <i className="fa-solid fa-bars"></i>{" "}
         <i className="fa-sharp fa-solid fa-circle-user"></i>
