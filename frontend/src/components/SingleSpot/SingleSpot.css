@@ -1,0 +1,45 @@
+.single-spot-images {
+    display: grid;
+    grid-template-columns: repeat(3, 2fr);
+    gap: 1rem;
+}
+
+.spot-detail {
+    display: flex;
+    align-items: center;
+    gap: 50%;
+    border-bottom: 1px solid lightgray;
+}
+
+img {
+    height: 320px;
+    width: 100%;
+    border-radius: 1rem;
+}
+
+.review-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.booking {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 3rem;
+    border: 1px solid gray;
+    border-radius: 1rem;
+}
+
+.price-review {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.reserve {
+    padding: .5rem 1rem;
+    color: orange;
+    border-radius: 1rem;
+    border: 1px solid gray
+}

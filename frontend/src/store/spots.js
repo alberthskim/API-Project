@@ -2,6 +2,7 @@ import { csrfFetch } from "./csrf";
 
 const LOAD_SPOTS = "spots/LOAD_SPOTS";
 const LOAD_SINGLE_SPOT = 'spots/LOAD_SINGLE_SPOTS'
+const CREATE_SPOT = "spots/CREATE_SPOT"
 
 //ACTIONS FOR SPOTS
 export const loadSpots = (spots) => {
@@ -11,11 +12,18 @@ export const loadSpots = (spots) => {
   };
 };
 
-export const loadSingleSpot = spots => {
+export const loadSingleSpot = spot => {
     return {
         type: LOAD_SINGLE_SPOT,
-        spots
+        spot
     }
+}
+
+export const makeASpot = spot => {
+  return {
+    type: CREATE_SPOT,
+    spot
+  }
 }
 
 //THUNKS FOR SPOTS
@@ -36,9 +44,23 @@ export const getSingleSpot = (spotId) => async (dispatch) => {
 
     if(response.ok) {
         let spot = await response.json();
-        console.log("after grabbing from db", spot)
+        // console.log("after grabbing from db", spot)
         dispatch(loadSingleSpot(spot))
         return spot;
+    }
+}
+
+export const createASpot = (spot) => async (dispatch) => {
+    const response = await csrfFetch('/api/spots', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(spot)
+    });
+
+    if(response.ok) {
+      const newSpot = await response.json();
+      dispatch(makeASpot(newSpot))
+      return spot;
     }
 }
 
@@ -51,6 +73,22 @@ const spotReducer = (state = initialState, action) => {
       const spots = {};
       action.spots.forEach((spot) => (spots[spot.id] = spot));
       return { allSpots: {...spots}, singleSpot: {...state.singleSpot} };
+    }
+    case LOAD_SINGLE_SPOT: {
+      const newState = {...state, singleSpot: {...state.singleSpot}};
+      const spot = {...action.spot, SpotImages: [state.singleSpot.SpotImages]};
+      action.spot.SpotImages.forEach((img, index) => {
+        spot.SpotImages[index] = img;
+      })
+      newState.singleSpot = spot
+      return newState;
+    }
+    case CREATE_SPOT: {
+      let newSpot = {...action.spot}
+      const newState = {...state, newSpot};
+      console.log("This is going to be the", newState);
+      newState.allSpots[action.spot.id] = action.spot;
+      return newState;
     }
     default: {
       return state;
