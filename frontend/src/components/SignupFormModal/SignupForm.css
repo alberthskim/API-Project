@@ -1,7 +1,12 @@
-.form-container {
+form {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.signup {
+    display: flex;
+    justify-content: center;
 }
 
 label {
@@ -10,26 +15,17 @@ label {
     align-items: center;
     margin-bottom: 1rem;
 }
-input {
-    display: flex;
-}
 
-.button {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.button > button {
-    color: black;
+.signup-button {
+    color: white;
     font-weight: bold;
-    background-color: lightgray;
+    background-color: orange;
     padding: .5rem 1rem;
     border-radius: 1rem;
+    width: 100%;
 }
 
 button:hover {
-    color: green;
-    background-color: black;
+    color: orange;
+    background-color: white;
 }
