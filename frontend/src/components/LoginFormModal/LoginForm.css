@@ -35,3 +35,11 @@ button:hover {
     color: orange;
     background-color: white;
 }
+
+.demo-button {
+    padding-top: 1rem;
+    border: none;
+    background-color: white;
+    text-decoration: underline;
+    color: red
+}

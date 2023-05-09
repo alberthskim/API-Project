@@ -5,7 +5,7 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import Spots from "./components/Spots";
 import SingleSpot from "./components/SingleSpot";
-import NewSpotForm from "./components/SpotForm";
+import SpotForm from "./components/SpotForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -22,11 +22,11 @@ function App() {
             <Route exact path='/'>
                 <Spots />
             </Route>
+            <Route path='/spots/new'>
+                <SpotForm />
+            </Route>
             <Route path='/spots/:spotId'>
                 <SingleSpot />
-            </Route>
-            <Route path='/spots/new'>
-                <NewSpotForm />
             </Route>
             <Route>
                 <h2>Page Could Not Be Found!</h2>
