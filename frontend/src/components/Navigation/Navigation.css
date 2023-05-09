@@ -25,3 +25,10 @@ ul {
     border-radius: 1rem;
     padding: .6rem 5rem;
 }
+
+/* .nav-container {
+    position: fixed;
+    width: 100%;
+    z-index: 2;
+    background-color: white;
+} */
