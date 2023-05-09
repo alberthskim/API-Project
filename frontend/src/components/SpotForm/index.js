@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { makeASpot } from "../../store/spots";
+import { createASpot } from "../../store/spots";
 import "./SpotForm.css";
 
 const NewSpotForm = () => {
-  // const sessionUser = useSelector((state) => state.session.user);
-  // console.log("SessionUser", sessionUser);
+  const sessionUser = useSelector(state => state.session.user);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -14,8 +13,8 @@ const NewSpotForm = () => {
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
-  const [lat, setLat] = useState(0);
-  const [lng, setLng] = useState(0);
+  const [lat, setLat] = useState(1);
+  const [lng, setLng] = useState(1);
   const [description, setDescription] = useState("");
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
@@ -61,18 +60,24 @@ const NewSpotForm = () => {
         lng,
         description,
         name,
-        price,
+        price: Number(price),
         image,
       };
 
-      console.log("In submit", newSpot)
 
-    const makeNewSpot = await dispatch(makeASpot(newSpot));
-    console.log("This is the dispatch", makeNewSpot)
+    const makeNewSpot = await dispatch(createASpot(newSpot));
+    // console.log("This is the dispatch", makeNewSpot)
 
     history.push(`/spots/${makeNewSpot.id}`);
 
   };
+
+  useEffect(() => {
+    if(!sessionUser) {
+      history.push(`/`)
+      alert("Must be logged in to create a post!")
+    }
+  }, [])
 
   return (
     <>
