@@ -1,14 +1,24 @@
+.single-spot-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
 .single-spot-images {
     display: grid;
     grid-template-columns: repeat(3, 2fr);
     gap: 1rem;
 }
+.description {
+    width: 75%;
+}
 
 .spot-detail {
     display: flex;
     align-items: center;
-    gap: 50%;
+    gap: 25%;
     border-bottom: 1px solid lightgray;
+    padding-top: 1rem;
+    padding-bottom: 1rem;;
 }
 
 img {
@@ -29,13 +39,16 @@ img {
     padding: 1rem 3rem;
     border: 1px solid gray;
     border-radius: 1rem;
+    width: 25%;
 }
 
 .price-review {
     display: flex;
+    justify-content: center;
     align-items: center;
     gap: 1rem;
     padding: 1rem;
+    width: 100%;
 }
 
 .reserve {
