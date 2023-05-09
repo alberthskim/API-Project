@@ -83,8 +83,9 @@ export const createASpot = (spot) => async (dispatch) => {
 };
 
 export const getUserSpots = () => async (dispatch) => {
-  const response = await csrfFetch('/api/spots/current');
+  const response = await csrfFetch('/api/spots/current/');
   const spots = await response.json();
+  console.log("thunky", spots);
   dispatch(loadUserSpots(spots.Spots))
 }
 
