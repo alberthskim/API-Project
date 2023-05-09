@@ -5,7 +5,8 @@ import { makeASpot } from "../../store/spots";
 import "./SpotForm.css";
 
 const NewSpotForm = () => {
-  const sessionUser = useSelector((state) => state.session.user);
+  // const sessionUser = useSelector((state) => state.session.user);
+  // console.log("SessionUser", sessionUser);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -63,6 +64,8 @@ const NewSpotForm = () => {
         price,
         image,
       };
+
+      console.log("In submit", newSpot)
 
     const makeNewSpot = await dispatch(makeASpot(newSpot));
     console.log("This is the dispatch", makeNewSpot)
