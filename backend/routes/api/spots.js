@@ -40,14 +40,17 @@ router.get("/current", requireAuth, async (req, res) => {
 
     const average = total / json.Reviews.length;
     json.avgRating = average;
+    const findImage = json.SpotImages.find(img => img.preview === true)
 
-    json.SpotImages.forEach((image) => {
-      if (image.preview) {
-        json.previewImage = image.url;
-      } else {
-        json.previewImage = "Image Not Found";
-      }
-    });
+    // json.SpotImages.forEach((image) => {
+    //   if (image.preview) {
+    //     json.previewImage = image.url;
+    //   } else {
+    //     json.previewImage = "Image Not Found";
+    //   }
+    // });
+    if(findImage) json.previewImage = findImage.url
+
 
     delete json.Reviews;
     delete json.SpotImages;
@@ -216,13 +219,17 @@ router.get("/", async (req, res) => {
     const average = total / json.Reviews.length;
     json.avgRating = average;
 
-    json.SpotImages.forEach((image) => {
-      if (image.preview) {
-        json.previewImage = image.url;
-      } else {
-        json.previewImage = "No Preview Image Available. Come Back Later!";
-      }
-    });
+    const findImage = json.SpotImages.find(img => img.preview === true)
+
+    // json.SpotImages.forEach((image) => {
+    //   if (image.preview) {
+    //     json.previewImage = image.url;
+    //   } else {
+    //     json.previewImage = "No Preview Image Available. Come Back Later!";
+    //   }
+    // });
+
+    if(findImage) json.previewImage = findImage.url
 
     delete json.Reviews;
     delete json.SpotImages;

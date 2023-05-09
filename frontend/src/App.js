@@ -23,10 +23,10 @@ function App() {
             <Route exact path='/'>
                 <Spots />
             </Route>
-            <Route path='/spots/new'>
+            <Route exact path='/spots/new'>
                 <SpotForm />
             </Route>
-            <Route path='/current'>
+            <Route exact path='/current'>
                 <UserSpots />
             </Route>
             <Route path='/spots/:spotId'>
