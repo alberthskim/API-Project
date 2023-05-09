@@ -1,0 +1,19 @@
+.newSpot {
+    text-decoration: none;
+    padding: .5rem 1rem;
+    border-radius: 1rem;
+}
+
+.newspot-link {
+    text-decoration: none;
+    color: orange;
+}
+
+.manage-header {
+    padding-left: 1.5rem;
+}
+
+.button {
+    display: flex;
+    padding-top: 1rem;
+}
