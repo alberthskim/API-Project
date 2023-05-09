@@ -2,13 +2,13 @@ import { csrfFetch } from "./csrf";
 
 const LOAD_SPOTS = "spots/LOAD_SPOTS";
 const LOAD_SINGLE_SPOT = 'spots/LOAD_SINGLE_SPOTS'
-const CREATE_SPOT = "spots/CREATE_SPOT"
+const CREATE_A_SPOT = "spots/CREATE_A_SPOT"
 
 //ACTIONS FOR SPOTS
 export const loadSpots = (spots) => {
   return {
     type: LOAD_SPOTS,
-    spots,
+    spots
   };
 };
 
@@ -21,7 +21,7 @@ export const loadSingleSpot = spot => {
 
 export const makeASpot = spot => {
   return {
-    type: CREATE_SPOT,
+    type: CREATE_A_SPOT,
     spot
   }
 }
@@ -76,18 +76,18 @@ const spotReducer = (state = initialState, action) => {
     }
     case LOAD_SINGLE_SPOT: {
       const newState = {...state, singleSpot: {...state.singleSpot}};
-      const spot = {...action.spot, SpotImages: [state.singleSpot.SpotImages]};
+      const oneSpot = {...action.spot, SpotImages: [state.singleSpot.SpotImages]};
       action.spot.SpotImages.forEach((img, index) => {
-        spot.SpotImages[index] = img;
+        oneSpot.SpotImages[index] = img;
       })
-      newState.singleSpot = spot
+      newState.singleSpot = oneSpot
       return newState;
     }
-    case CREATE_SPOT: {
-      let newSpot = {...action.spot}
-      const newState = {...state, newSpot};
-      console.log("This is going to be the", newState);
-      newState.allSpots[action.spot.id] = action.spot;
+    case CREATE_A_SPOT: {
+      let newSpot = {...action.spot};
+      console.log("This is inside create a spot", newSpot)
+      let newState = {...state, newSpot}
+      newState.allSpots[action.spot.id] = {...action.spot};
       return newState;
     }
     default: {
