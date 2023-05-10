@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { getAllSpots } from "../../store/spots";
 import "./Spots.css";
 
@@ -16,7 +16,7 @@ const Spots = () => {
   return (
     <div className="spot-container">
       {spots.map((spot) => (
-        <NavLink to={`/spots/${spot.id}`} className="spot-details">
+        <Link to={`/spots/${spot.id}`} className="spot-details">
           <div className="spots">
             <div className="spotimg">
               {spot.previewImage ? (
@@ -27,17 +27,18 @@ const Spots = () => {
             </div>
             <div className="spot-details">
               {/* <div className="name">{spot.name}</div> */}
-              <div className="review">
-                ⭐️ {spot.avgRating ? spot.avgRating : "New"}
+              <div className="city-state-review">
+                {spot.city}, {spot.state}
+                <div className="ratings">
+                  <i className="fa-brands fa-canadian-maple-leaf"></i>
+                  {spot.avgRating ? spot.avgRating : "New"}
+                </div>
               </div>
-            </div>
-            <div className="city-state">
-              {spot.city}, {spot.state}
             </div>
             <div className="country">{spot.country}</div>
             <div className="price">${spot.price} night</div>
           </div>
-        </NavLink>
+        </Link>
       ))}
     </div>
   );

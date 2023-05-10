@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserSpots } from "../../store/spots";
 import { Link, useHistory } from "react-router-dom";
+import OpenModalButton from "../../components/OpenModalButton";
+import DeleteButton from "./DeleteButton";
 import "./UserSpots.css";
 
 const UserSpots = () => {
@@ -14,7 +16,6 @@ const UserSpots = () => {
   useEffect(() => {
     dispatch(getUserSpots());
   }, [dispatch]);
-
 
   useEffect(() => {
     if (!sessionUser) {
@@ -43,19 +44,26 @@ const UserSpots = () => {
                 </div>
                 <div className="spot-details">
                   {/* <div className="name">{spot.name}</div> */}
-                  <div className="review">
-                    ⭐️ {spot.avgRating ? spot.avgRating : "New"}
+                  <div className="city-state-review">
+                    {spot.city}, {spot.state}
+                    <div className="ratings">
+                      <i className="fa-brands fa-canadian-maple-leaf"></i>
+                      {spot.avgRating ? spot.avgRating : "New"}
+                    </div>
                   </div>
-                </div>
-                <div className="city-state">
-                  {spot.city}, {spot.state}
                 </div>
                 <div className="country">{spot.country}</div>
                 <div className="price">${spot.price} night</div>
               </Link>
-              <div className="button">
-                <Link to={`/spots/${spot.id}/edit`} className="spot-details"><button>Update</button></Link>
-                <button>Delete</button>
+              <div className="buttons">
+                <Link to={`/spots/${spot.id}/edit`} className="spot-details">
+                  <button className="user-spot-buttons update-button">Update</button>
+                </Link>
+                <OpenModalButton
+                  className="user-spot-buttons"
+                  buttonText="Delete"
+                  modalComponent={<DeleteButton spotId={spot.id} />}
+                />
               </div>
             </div>
           </>

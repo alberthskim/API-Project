@@ -205,15 +205,17 @@ const NewSpotForm = () => {
           <label>
             <h2>Liven up your spot with photos</h2>
             <p>Submit a link to atleast one photo to publish your spot</p>
-            <input
-              type="text"
-              name="url"
-              value={image}
-              onChange={(e) => setImage(e.target.value)}
-            />
-            <input type="text" name="url" />
-            <input type="text" name="url" />
-            <input type="text" name="url" />
+            <div className="input-container">
+              <input
+                type="text"
+                name="url"
+                value={image}
+                onChange={(e) => setImage(e.target.value)}
+              />
+              <input type="text" name="url" />
+              <input type="text" name="url" />
+              <input type="text" name="url" />
+            </div>
           </label>
           {validationErrors.image && submitted && (
             <p className="errors">{validationErrors.image}</p>
