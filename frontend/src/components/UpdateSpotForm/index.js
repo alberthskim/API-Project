@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { createASpot } from "../../store/spots";
-import "./SpotForm.css";
+import { useHistory, useParams } from "react-router-dom";
+import { updateASpot } from "../../store/spots";
+// import "./SpotForm.css";
 
-const NewSpotForm = () => {
+const UpdateSpotForm = () => {
   const sessionUser = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
   const history = useHistory();
+  const {spotId} = useParams();
 
   const [country, setCountry] = useState("");
   const [address, setAddress] = useState("");
@@ -21,6 +22,7 @@ const NewSpotForm = () => {
   const [image, setImage] = useState("");
   const [validationErrors, setValidationErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
+
 
   useEffect(() => {
     const errors = {};
@@ -44,7 +46,7 @@ const NewSpotForm = () => {
     if (!name || name.length < 5 || name.length > 50)
       errors.name =
         "Name must exist and must be greater than 5 characters and less than 50 characters.";
-    if (!price || price < 0)
+    if (!price || price < 0 )
       errors.price = "Price must have a minimum of $0 a night.";
     if (!image) errors.image = "Please provide at least 1 image.";
     setValidationErrors(errors);
@@ -56,22 +58,22 @@ const NewSpotForm = () => {
     setSubmitted(true);
 
     if (!Object.values(validationErrors).length) {
-      const newSpot = {
-        country,
-        address,
-        city,
-        state,
-        lat,
-        lng,
-        description,
-        name,
-        price: Number(price),
-        image,
-      };
-      const makeNewSpot = await dispatch(createASpot(newSpot));
-      // console.log("This is the dispatch", makeNewSpot)
-      history.push(`/spots/${makeNewSpot.id}`);
-    }
+    const updatedSpot = {
+      country,
+      address,
+      city,
+      state,
+      lat,
+      lng,
+      description,
+      name,
+      price: Number(price),
+      image,
+    };
+    const updateSpot = await dispatch(updateASpot(updatedSpot, spotId));
+    history.push(`/spots/${updateSpot.id}`);
+  }
+
   };
 
   useEffect(() => {
@@ -84,7 +86,7 @@ const NewSpotForm = () => {
   return (
     <>
       <form className="spot-form" onSubmit={handleSubmit}>
-        <h2>Create a new Spot</h2>
+        <h2>Update your Spot</h2>
         <div className="location-container">
           <p>Where's your place located?</p>
           <p>
@@ -220,12 +222,15 @@ const NewSpotForm = () => {
           )}
         </div>
 
-        <button type="submit" className="create-spot-button">
-          Create Spot
+        <button
+          type="submit"
+          className="create-spot-button"
+        >
+          Update Spot
         </button>
       </form>
     </>
   );
 };
 
-export default NewSpotForm;
+export default UpdateSpotForm;

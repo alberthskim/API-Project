@@ -15,7 +15,7 @@ const UserSpots = () => {
     dispatch(getUserSpots());
   }, [dispatch]);
 
-  
+
   useEffect(() => {
     if (!sessionUser) {
       history.push("/");
@@ -54,7 +54,7 @@ const UserSpots = () => {
                 <div className="price">${spot.price} night</div>
               </Link>
               <div className="button">
-                <button>Update</button>
+                <Link to={`/spots/${spot.id}/edit`} className="spot-details"><button>Update</button></Link>
                 <button>Delete</button>
               </div>
             </div>

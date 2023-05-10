@@ -7,6 +7,7 @@ import Spots from "./components/Spots";
 import SingleSpot from "./components/SingleSpot";
 import SpotForm from "./components/SpotForm";
 import UserSpots from "./components/UserSpots";
+import UpdateSpotForm from "./components/UpdateSpotForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -18,25 +19,28 @@ function App() {
   return (
     <>
       <Navigation isLoaded={isLoaded} />
-      {isLoaded &&
+      {isLoaded && (
         <Switch>
-            <Route exact path='/'>
-                <Spots />
-            </Route>
-            <Route exact path='/spots/new'>
-                <SpotForm />
-            </Route>
-            <Route exact path='/current'>
-                <UserSpots />
-            </Route>
-            <Route path='/spots/:spotId'>
-                <SingleSpot />
-            </Route>
-            <Route>
-                <h2>Page Could Not Be Found!</h2>
-            </Route>
+          <Route exact path="/">
+            <Spots />
+          </Route>
+          <Route exact path="/spots/new">
+            <SpotForm />
+          </Route>
+          <Route path="/spots/:spotId/edit">
+            <UpdateSpotForm />
+          </Route>
+          <Route exact path="/current">
+            <UserSpots />
+          </Route>
+          <Route path="/spots/:spotId">
+            <SingleSpot />
+          </Route>
+          <Route>
+            <h2>Page Could Not Be Found!</h2>
+          </Route>
         </Switch>
-        }
+      )}
     </>
   );
 }

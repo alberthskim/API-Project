@@ -18,7 +18,7 @@ const SingleSpot = () => {
     useEffect(() => {
         dispatch(getSingleSpot(spotId))
         dispatch(getAllSpots()).then(() => setIsLoaded(true))
-    }, [dispatch, spotId])
+    }, [dispatch])
 
     const handleReserve = () => {
         alert("Feature Coming Soon")
