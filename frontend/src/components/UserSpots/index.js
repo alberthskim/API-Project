@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserSpots } from "../../store/spots";
 import { Link, useHistory } from "react-router-dom";
 import OpenModalButton from "../../components/OpenModalButton";
-import DeleteButton from "./DeleteButton";
+import DeleteButton from "./DeleteButton.js";
 import "./UserSpots.css";
 
 const UserSpots = () => {
