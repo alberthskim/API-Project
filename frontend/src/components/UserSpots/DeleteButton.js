@@ -11,9 +11,9 @@ const DeleteModal = ({spotId}) => {
 
     const deletehandler = async () => {
         await dispatch(deleteASpot(spotId))
-        alert("Listing has been removed")
-        history.push('/')
+        history.push('/spots/current')
         closeModal()
+        window.location.reload(false)
     }
 
     const doNotDeletehandler = async () => {

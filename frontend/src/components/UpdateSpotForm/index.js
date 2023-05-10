@@ -19,7 +19,6 @@ const UpdateSpotForm = () => {
   const [description, setDescription] = useState("");
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
-  const [image, setImage] = useState("");
   const [validationErrors, setValidationErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
 
@@ -48,9 +47,9 @@ const UpdateSpotForm = () => {
         "Name must exist and must be greater than 5 characters and less than 50 characters.";
     if (!price || price < 0 )
       errors.price = "Price must have a minimum of $0 a night.";
-    if (!image) errors.image = "Please provide at least 1 image.";
+    // if (!image1) errors.image = "Please provide at least 1 image.";
     setValidationErrors(errors);
-  }, [country, address, city, state, description, name, price, image]);
+  }, [country, address, city, state, description, name, price]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -68,8 +67,9 @@ const UpdateSpotForm = () => {
       description,
       name,
       price: Number(price),
-      image,
     };
+
+
     const updateSpot = await dispatch(updateASpot(updatedSpot, spotId));
     history.push(`/spots/${updateSpot.id}`);
   }
@@ -202,26 +202,6 @@ const UpdateSpotForm = () => {
             <p className="errors">{validationErrors.price}</p>
           )}
         </div>
-
-        <div className="url-container">
-          <label>
-            <h2>Liven up your spot with photos</h2>
-            <p>Submit a link to atleast one photo to publish your spot</p>
-            <input
-              type="text"
-              name="url"
-              value={image}
-              onChange={(e) => setImage(e.target.value)}
-            />
-            <input type="text" name="url" />
-            <input type="text" name="url" />
-            <input type="text" name="url" />
-          </label>
-          {validationErrors.image && submitted && (
-            <p className="errors">{validationErrors.image}</p>
-          )}
-        </div>
-
         <button
           type="submit"
           className="create-spot-button"
