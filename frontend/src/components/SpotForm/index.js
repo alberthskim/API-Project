@@ -18,7 +18,10 @@ const NewSpotForm = () => {
   const [description, setDescription] = useState("");
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
-  const [image, setImage] = useState("");
+  const [image1, setImage1] = useState("");
+  const [image2, setImage2] = useState("");
+  const [image3, setImage3] = useState("");
+  const [image4, setImage4] = useState("");
   const [validationErrors, setValidationErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
 
@@ -46,9 +49,9 @@ const NewSpotForm = () => {
         "Name must exist and must be greater than 5 characters and less than 50 characters.";
     if (!price || price < 0)
       errors.price = "Price must have a minimum of $0 a night.";
-    if (!image) errors.image = "Please provide at least 1 image.";
+    if (!image1) errors.image = "Please provide at least 1 image.";
     setValidationErrors(errors);
-  }, [country, address, city, state, description, name, price, image]);
+  }, [country, address, city, state, description, name, price, image1, image2, image3, image4]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -65,10 +68,12 @@ const NewSpotForm = () => {
         lng,
         description,
         name,
-        price: Number(price),
-        image,
+        price: Number(price)
       };
-      const makeNewSpot = await dispatch(createASpot(newSpot));
+
+      const newImage = [image1, image2, image3, image4];
+
+      const makeNewSpot = await dispatch(createASpot(newSpot, newImage));
       // console.log("This is the dispatch", makeNewSpot)
       history.push(`/spots/${makeNewSpot.id}`);
     }
@@ -209,12 +214,27 @@ const NewSpotForm = () => {
               <input
                 type="text"
                 name="url"
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
+                value={image1}
+                onChange={(e) => setImage1(e.target.value)}
               />
-              <input type="text" name="url" />
-              <input type="text" name="url" />
-              <input type="text" name="url" />
+              <input
+                type="text"
+                name="url"
+                value={image2}
+                onChange={(e) => setImage2(e.target.value)}
+              />
+              <input
+                type="text"
+                name="url"
+                value={image3}
+                onChange={(e) => setImage3(e.target.value)}
+              />
+              <input
+                type="text"
+                name="url"
+                value={image4}
+                onChange={(e) => setImage4(e.target.value)}
+              />
             </div>
           </label>
           {validationErrors.image && submitted && (
