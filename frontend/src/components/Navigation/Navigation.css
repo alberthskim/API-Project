@@ -17,18 +17,14 @@ ul {
     width: 95%;
     align-items: center;
     justify-content: space-between;
-    padding-bottom: 1.2rem;
-    border-bottom: .5px solid lightgray;
+    padding-bottom: .5rem;
+    border-bottom: 1px solid lightgray;
+    margin: 0;
 }
 
 .search {
     border-radius: 1rem;
-    padding: .6rem 5rem;
+    padding: .5rem 5rem;
+    margin-right: 8rem;
 }
 
-/* .nav-container {
-    position: fixed;
-    width: 100%;
-    z-index: 2;
-    background-color: white;
-} */

@@ -5,6 +5,7 @@ const LOAD_SINGLE_SPOT = "spots/LOAD_SINGLE_SPOTS";
 const CREATE_A_SPOT = "spots/CREATE_A_SPOT";
 const GET_CURRENT_USER_SPOTS = "spots/GET_CURRENT_USER_SPOTS"
 const UPDATE_A_SPOT = "spots/UPDATE_A_SPOT";
+const DELETE_A_SPOT = "spots/DELETE_A_SPOT";
 
 //ACTIONS FOR SPOTS
 export const loadSpots = (spots) => {
@@ -39,6 +40,13 @@ export const editASpot = (spot) => {
   return {
     type: UPDATE_A_SPOT,
     spot
+  }
+}
+
+export const removeASpot = (spotId) => {
+  return {
+    type: DELETE_A_SPOT,
+    spotId
   }
 }
 
@@ -89,8 +97,8 @@ export const getUserSpots = () => async (dispatch) => {
   dispatch(loadUserSpots(spots.Spots))
 }
 
-export const updateASpot = (spot, id) => async (dispatch) => {
-    const response = await csrfFetch(`/api/spots/${id}`, {
+export const updateASpot = (spot, spotId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/spots/${spotId}`, {
       method: "PUT",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(spot)
@@ -100,6 +108,17 @@ export const updateASpot = (spot, id) => async (dispatch) => {
       const updatedSpot = await response.json();
       dispatch(editASpot(updatedSpot))
       return updatedSpot;
+    }
+}
+
+export const deleteASpot = spotId => async (dispatch) => {
+    const response = await csrfFetch(`/api/spots/${spotId}`, {
+      method: "DELETE",
+      headers: {'Content-Type': 'application/json'}
+    });
+
+    if(response.ok) {
+      dispatch(removeASpot(spotId));
     }
 }
 
@@ -130,21 +149,26 @@ const spotReducer = (state = initialState, action) => {
       let newSpot = {};
       newSpot = {...action.spot};
       let newState = { ...state, newSpot};
-      newState.allSpots[action.spot.id] = { ...action.spot};
+      newState.allSpots[action.spot.id] = newSpot;
       return newState;
     }
     case GET_CURRENT_USER_SPOTS: {
-      let newState = {allSpots: {}, singleSpot: { SpotImages: []}};
+      let newState = {allSpots: {}, singleSpot: { SpotImages: [] }};
       const newSpots = {};
       action.spots.forEach(spot => {
         newSpots[spot.id] = spot
       });
-      return { allSpots: { ...newSpots }, singleSpot: { ...newState.singleSpot } };
+    return { allSpots: { ...newSpots }, singleSpot: { ...newState.singleSpot } };
 
-      }
+    }
     case UPDATE_A_SPOT: {
       let newState = {...state};
       newState.singleSpot = action.spot;
+      return newState;
+    }
+    case DELETE_A_SPOT: {
+      const newState = {...state};
+      delete newState[action.spotId]
       return newState;
     }
     default: {

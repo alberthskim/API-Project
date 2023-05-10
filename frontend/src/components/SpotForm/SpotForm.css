@@ -1,3 +1,4 @@
+
 .city-state {
     display: flex;
 }
@@ -12,6 +13,7 @@
     flex-direction: column;
     align-items: center;
     border-bottom: 1px solid gray;
+    width: 100%;
 }
 
 .description-container {
@@ -19,6 +21,7 @@
     flex-direction: column;
     align-items: center;
     border-bottom: 1px solid gray;
+    width: 100%
 }
 
 .text-area {
@@ -27,6 +30,7 @@
 
 .title-place {
     border-bottom: 1px solid gray;
+    width: 100%;
 }
 
 .price-container {
@@ -34,16 +38,25 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 
 .url-container {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 
 .create-spot-button {
     padding: .5rem 1rem;
     color: orange;
     border-radius: 1rem;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
 }

@@ -1,7 +1,7 @@
 .newSpot {
     text-decoration: none;
     padding: .5rem 1rem;
-    border-radius: 1rem;
+    border-radius: .5rem;
 }
 
 .newspot-link {
@@ -13,7 +13,12 @@
     padding-left: 1.5rem;
 }
 
-.button {
+.buttons {
     display: flex;
     padding-top: 1rem;
+    gap: .5rem;
+}
+
+.user-spot-buttons {
+    padding: .5rem;
 }
