@@ -89,8 +89,8 @@ export const getUserSpots = () => async (dispatch) => {
   dispatch(loadUserSpots(spots.Spots))
 }
 
-export const updateASpot = (spot, spotId) => async (dispatch) => {
-    const response = await csrfFetch(`/api/spots/${spotId}`, {
+export const updateASpot = (spot, id) => async (dispatch) => {
+    const response = await csrfFetch(`/api/spots/${id}`, {
       method: "PUT",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(spot)
@@ -115,7 +115,7 @@ const spotReducer = (state = initialState, action) => {
     }
     case LOAD_SINGLE_SPOT: {
       const newState = { ...state, singleSpot: { ...state.singleSpot } };
-      console.log("this is the new state", newState);
+      // console.log("this is the new state", newState);
       const oneSpot = {
         ...action.spot,
         SpotImages: [state.singleSpot.SpotImages],
@@ -134,19 +134,19 @@ const spotReducer = (state = initialState, action) => {
       return newState;
     }
     case GET_CURRENT_USER_SPOTS: {
-      let newState = {allSpots: {}, singleSpot: {}};
+      let newState = {allSpots: {}, singleSpot: { SpotImages: []}};
       const newSpots = {};
       action.spots.forEach(spot => {
         newSpots[spot.id] = spot
       });
-      newState.allSpots = newSpots;
-      return newState;
+      return { allSpots: { ...newSpots }, singleSpot: { ...newState.singleSpot } };
+
       }
-    // case UPDATE_A_SPOT: {
-    //   let newState = {...state};
-    //   newState.singleSpot = action.spot;
-    //   return newState;
-    // }
+    case UPDATE_A_SPOT: {
+      let newState = {...state};
+      newState.singleSpot = action.spot;
+      return newState;
+    }
     default: {
       return state;
     }
