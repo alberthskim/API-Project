@@ -5,6 +5,7 @@
     padding-left: 1.5rem;
     padding-right: 1.5rem;
     padding-top: 2rem;
+    font-family: "KlavikaNX-Light", sans-serif;
 }
 
 #spot-img {
@@ -15,6 +16,7 @@
 
 .spot-details {
     text-decoration: none;
+    color: darkorange;
 }
 
 .city-state-review {

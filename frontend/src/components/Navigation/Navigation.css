@@ -37,4 +37,5 @@ ul {
     display: flex;
     justify-content: center;
     gap: .3rem;
+    font-family: 'Alike', serif;
 }
