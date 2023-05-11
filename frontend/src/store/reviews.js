@@ -51,6 +51,7 @@ export const addAReview = (review, spotId) => async (dispatch) => {
     if(response.ok) {
         const newReview = await response.json();
         dispatch(addReview(newReview));
+        dispatch(getAllReviews(spotId)); // this loads the spots reviews and gets the username that was missing.
         return newReview;
     }
 }

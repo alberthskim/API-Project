@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import { deleteASpot } from "../../store/spots";
@@ -13,7 +13,6 @@ const DeleteModal = ({spotId}) => {
         await dispatch(deleteASpot(spotId))
         history.push('/spots/current')
         closeModal()
-        window.location.reload(false)
     }
 
     const doNotDeletehandler = async () => {

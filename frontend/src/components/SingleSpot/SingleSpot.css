@@ -8,9 +8,20 @@
 
 .single-spot-images {
     display: grid;
-    grid-template-columns: repeat(4, 2fr);
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+    "first first 1 2"
+    "first first 3 4";
     gap: 1rem;
 }
+
+#images0 {
+    grid-area: first;
+    border: 3px solid red;
+}
+
+
 .description {
     width: 75%;
 }

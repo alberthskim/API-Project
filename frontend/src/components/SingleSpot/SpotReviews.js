@@ -15,14 +15,12 @@ const SpotReviews = ({ spotId, spotRating, numReviews, spot }) => {
   const reviews = Object.values(reviewObj);
   const sessionUser = useSelector((state) => state.session.user);
 
-  console.log("Line 15 Reviews", reviews);
   useEffect(() => {
     dispatch(getAllReviews(spotId));
     dispatch(getSingleSpot(spotId));
 
   }, [dispatch, spotId]);
 
-  console.log("This is spotrating", spot.avgStarRating);
 
   return (
     <div className="reviews-container">
@@ -36,7 +34,7 @@ const SpotReviews = ({ spotId, spotRating, numReviews, spot }) => {
           <OpenModalButton
             className="review-modal-button"
             buttonText="Post A Review"
-            modalComponent={<ReviewModalButton spotId={spotId}/>}
+            modalComponent={<ReviewModalButton spotId={spotId} />}
           />
         )}
 
