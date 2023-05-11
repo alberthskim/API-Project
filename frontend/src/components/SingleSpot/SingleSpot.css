@@ -6,7 +6,7 @@
     color: darkorange;
 }
 
-.single-spot-images {
+/* .single-spot-images {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: 1fr 1fr;
@@ -14,12 +14,59 @@
     "first first 1 2"
     "first first 3 4";
     gap: 1rem;
-}
+} */
 
-#images0 {
+/* #images0 {
     grid-area: first;
     border: 3px solid red;
+} */
+
+.images {
+    position: absolute;
+    width: 24.5%;
+    height: 49.5%;
 }
+
+.single-spot-images {
+    position: relative;
+    /* border: 1px solid red; */
+    width: 96vw;
+    height: 550px;
+}
+
+img {
+    height: 50%;
+    width: 25%;
+    /* border-radius: 1rem; */
+    object-fit: cover;
+}
+
+.i0 {
+    width: 50%;
+    height: 100%;
+    left: 0;
+}
+
+.i1 {
+    top: 0;
+    right: 0;
+}
+
+.i2 {
+    top: 0;
+    right: 25%;
+}
+
+.i3 {
+    bottom: 0;
+    right: 25%
+}
+
+.i4 {
+    bottom: 0;
+    right: 0;
+}
+
 
 
 .description {
