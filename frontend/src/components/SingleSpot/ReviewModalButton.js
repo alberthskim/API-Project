@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useModal } from "../../context/Modal";
 import { addAReview } from "../../store/reviews";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 import "./ReviewModalButton.css";
 import leaf from "../../assets/mapleleaf.png";
+import { getSingleSpot } from "../../store/spots";
 
 const ReviewModalButton = ({ spotId }) => {
   const [review, setReview] = useState("");
@@ -12,7 +12,6 @@ const ReviewModalButton = ({ spotId }) => {
   const [activeRating, setActiveRating] = useState(1);
   const { closeModal } = useModal();
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const handleReview = async (e) => {
     e.preventDefault();
@@ -22,8 +21,7 @@ const ReviewModalButton = ({ spotId }) => {
     };
 
     await dispatch(addAReview(newReview, spotId));
-    history.push(`/spots/${spotId}`);
-    window.location.reload(false);
+    await dispatch(getSingleSpot(spotId)) //re-renders the whole single spot to get every info and changes whats needed.
     closeModal();
   };
 

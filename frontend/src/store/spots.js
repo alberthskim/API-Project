@@ -56,7 +56,6 @@ export const getAllSpots = () => async (dispatch) => {
 
   if (response.ok) {
     let spots = await response.json();
-    // console.log("After fetching data", spots);
     spots = spots.Spots;
     dispatch(loadSpots(spots));
     return spots;
@@ -68,14 +67,12 @@ export const getSingleSpot = (spotId) => async (dispatch) => {
 
   if (response.ok) {
     let spot = await response.json();
-    // console.log("after grabbing from db", spot)
     dispatch(loadSingleSpot(spot));
     return spot;
   }
 };
 
 export const createASpot = (spot, images) => async (dispatch) => {
-  console.log("Create a spot thunk",spot)
   const response = await csrfFetch("/api/spots", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -104,7 +101,6 @@ export const createASpot = (spot, images) => async (dispatch) => {
 export const getUserSpots = () => async (dispatch) => {
   const response = await csrfFetch('/api/spots/current/');
   const spots = await response.json();
-  console.log("thunky", spots);
   dispatch(loadUserSpots(spots.Spots))
 }
 
@@ -145,7 +141,6 @@ const spotReducer = (state = initialState, action) => {
     }
     case LOAD_SINGLE_SPOT: {
       const newState = { ...state, singleSpot: { ...state.singleSpot } };
-      // console.log("this is the new state", newState);
       const oneSpot = {
         ...action.spot,
         SpotImages: [state.singleSpot.SpotImages],
@@ -178,8 +173,8 @@ const spotReducer = (state = initialState, action) => {
       return newState;
     }
     case DELETE_A_SPOT: {
-      const newState = {...state};
-      delete newState[action.spotId]
+      const newState = {...state, allSpots:{...state.allSpots}};
+      delete newState.allSpots[action.spotId]
       return newState;
     }
     default: {

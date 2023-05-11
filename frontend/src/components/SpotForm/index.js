@@ -74,7 +74,6 @@ const NewSpotForm = () => {
       const newImage = [image1, image2, image3, image4];
 
       const makeNewSpot = await dispatch(createASpot(newSpot, newImage));
-      // console.log("This is the dispatch", makeNewSpot)
       history.push(`/spots/${makeNewSpot.id}`);
     }
   };

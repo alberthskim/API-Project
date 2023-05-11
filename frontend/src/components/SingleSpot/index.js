@@ -36,7 +36,7 @@ const SingleSpot = () => {
                     <h2>{spot.city}, {spot.state}, {spot.country}</h2>
                 </div>
                 <div className="single-spot-images">
-                    {spot.SpotImages?.map(img => img ? <img src={img.url} alt="pics"></img> : null)}
+                    {spot.SpotImages?.map((img, i) => img ? <img src={img.url} id={`images${i}`} alt="pics"></img> : null)}
                 </div>
                 <div className="spot-detail">
                     <div className="description">

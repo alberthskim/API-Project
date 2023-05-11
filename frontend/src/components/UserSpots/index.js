@@ -11,8 +11,8 @@ const UserSpots = () => {
   const sessionUser = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
   const history = useHistory();
-  const spotsObj = useSelector((state) => state.spots);
-  const spots = Object.values(spotsObj.allSpots);
+  const spotsObj = useSelector((state) => state.spots.allSpots);
+  const spots = Object.values(spotsObj);
 
   useEffect(() => {
     dispatch(getUserSpots());
