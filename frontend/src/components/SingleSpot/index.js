@@ -46,7 +46,7 @@ const SingleSpot = () => {
                     <div className="booking">
                         <div className="price-review">
                         <span className="price">${spot.price} night</span>
-                        <span className="reviews"><img src={leaf} className="leaf"/> {spot.avgStarRating} • {spot.numReviews} Reviews</span>
+                        <span className="reviews"><img src={leaf} className="leaf"/> {spot.avgStarRating !== "NaN" ? Number(spot.avgStarRating).toFixed(1) : "New"} • {spot.numReviews} Reviews</span>
 
                         </div>
                         <button onClick={handleReserve} className="reserve">Reserve</button>

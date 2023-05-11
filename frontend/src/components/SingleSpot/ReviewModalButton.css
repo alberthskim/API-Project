@@ -1,4 +1,4 @@
-.star-ratings {
+.stars-for-rating {
     display: flex;
     justify-content: center;
 }
@@ -6,6 +6,8 @@
 .submit-review-button {
     display: flex;
     justify-content: center;
+    padding: .5rem 1rem;
+    border-radius: 1rem;
 }
 
 .review-modal {
@@ -16,9 +18,13 @@
 }
 
 .empty {
-    color: rgb(253, 202, 210);
+    color: lightgray;
 }
 
 .filled {
-    color: #ff5A5F;
+    color: orange;
+}
+
+.mapleleaf {
+    color: lightgray;
 }

@@ -3,8 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllReviews } from "../../store/reviews";
 import OpenModalButton from "../../components/OpenModalButton";
 import ReviewModalButton from "./ReviewModalButton";
-import './SpotReviews.css'
+import DeleteReviewButton from "./DeleteReviewButton";
+import "./SpotReviews.css";
 import leaf from "../../assets/mapleleaf.png";
+import { getSingleSpot } from "../../store/spots";
+
 
 const SpotReviews = ({ spotId, spotRating, numReviews, spot }) => {
   const dispatch = useDispatch();
@@ -12,45 +15,52 @@ const SpotReviews = ({ spotId, spotRating, numReviews, spot }) => {
   const reviews = Object.values(reviewObj);
   const sessionUser = useSelector((state) => state.session.user);
 
-  console.log(spot.ownerId)
+  console.log("Line 15 Reviews", reviews);
   useEffect(() => {
     dispatch(getAllReviews(spotId));
-  }, [dispatch]);
+    dispatch(getSingleSpot(spotId));
 
-  // if(!sessionUser) return null;
+  }, [dispatch, spotId]);
+
+  console.log("This is spotrating", spot.avgStarRating);
 
   return (
-      <div className="reviews-container">
+    <div className="reviews-container">
       <h2>
-        <img src={leaf} className="leaf" alt="maple" /> {spotRating} • {numReviews} Reviews
+        <img src={leaf} className="leaf" alt="maple" />{" "}
+        {spotRating === "NaN" ? "New" : Number(spotRating).toFixed(1)} • {numReviews} Reviews
       </h2>
 
-      {/* !(reviews.find(review => review.userId === sessionUser.id)) && */}
+      {sessionUser && sessionUser?.id !== spot.ownerId &&
+        !(reviews.find(review => review.userId === sessionUser?.id)) && (
+          <OpenModalButton
+            className="review-modal-button"
+            buttonText="Post A Review"
+            modalComponent={<ReviewModalButton spotId={spotId}/>}
+          />
+        )}
 
-    {/* {
-    (sessionUser.id !== spot.ownerId) &&  (<OpenModalButton
-                  className="review-modal-button"
-                  buttonText="Post A Review"
-                  modalComponent={<ReviewModalButton spotId={spotId} />}
-    />)
-
-    } */}
-    
       {reviews.map((review) => (
         <>
           <div className="review-box">
             <h4>
               {review.User?.firstName} {review.User?.lastName}
             </h4>
-            <p>{review.createdAt}</p>
+            <p>{new Date(review.createdAt).toLocaleDateString()}</p>
             <div className="review-details">
               <p>{review.review}</p>
             </div>
+
+            {sessionUser && review.userId === sessionUser?.id && (<OpenModalButton
+              className="review-modal-button"
+              buttonText="Delete A Review"
+              modalComponent={<DeleteReviewButton reviewId={review.id} spotId={spotId}/>}
+            />)}
           </div>
         </>
       ))}
     </div>
-  )
+  );
 };
 
 export default SpotReviews;
