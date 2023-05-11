@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
+import leaf from '../../assets/mapleleaf.png'
 import "./Navigation.css";
 
 function Navigation({ isLoaded }) {
@@ -9,14 +10,14 @@ function Navigation({ isLoaded }) {
 
   return (
     <div className="nav-container">
-      <ul>
+      <ul className="nav-list">
         <li>
           <NavLink exact to="/" className="logo">
-            <h1><i className="fa-solid fa-book"></i> storybnb</h1>
+            <h1 className="nav-title"><img src={leaf} className="nav-leaf"/> storybnb</h1>
           </NavLink>
         </li>
         <li>
-          <input className="search"></input>
+          {/* <input className="search"></input> */}
         </li>
         {isLoaded && (
           <li>

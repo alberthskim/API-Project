@@ -36,3 +36,9 @@
 .fa-canadian-maple-leaf {
     color: red;
 }
+
+.leaf {
+    height: 18px;
+    width: 18px;
+    transform: rotate(135deg);
+}

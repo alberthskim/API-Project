@@ -4,6 +4,7 @@ import { getUserSpots } from "../../store/spots";
 import { Link, useHistory } from "react-router-dom";
 import OpenModalButton from "../../components/OpenModalButton";
 import DeleteButton from "./DeleteButton.js";
+import leaf from "../../assets/mapleleaf.png";
 import "./UserSpots.css";
 
 const UserSpots = () => {
@@ -47,8 +48,8 @@ const UserSpots = () => {
                   <div className="city-state-review">
                     {spot.city}, {spot.state}
                     <div className="ratings">
-                      <i className="fa-brands fa-canadian-maple-leaf"></i>
-                      {spot.avgRating ? spot.avgRating : "New"}
+                    <img src={leaf} className="leaf"/>
+                      {spot.avgRating ? Number(spot.avgRating).toFixed(1) : "New"}
                     </div>
                   </div>
                 </div>
