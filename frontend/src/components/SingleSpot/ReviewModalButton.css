@@ -1,0 +1,24 @@
+.star-ratings {
+    display: flex;
+    justify-content: center;
+}
+
+.submit-review-button {
+    display: flex;
+    justify-content: center;
+}
+
+.review-modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.empty {
+    color: rgb(253, 202, 210);
+}
+
+.filled {
+    color: #ff5A5F;
+}

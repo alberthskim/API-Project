@@ -28,3 +28,13 @@ ul {
     margin-right: 8rem;
 }
 
+.nav-leaf {
+    height: 40px;
+    width: 40px;
+}
+
+.nav-title {
+    display: flex;
+    justify-content: center;
+    gap: .3rem;
+}

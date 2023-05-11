@@ -1,29 +1,56 @@
-import { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { getAllReviews } from "../../store/reviews";
+import OpenModalButton from "../../components/OpenModalButton";
+import ReviewModalButton from "./ReviewModalButton";
+import './SpotReviews.css'
+import leaf from "../../assets/mapleleaf.png";
 
+const SpotReviews = ({ spotId, spotRating, numReviews, spot }) => {
+  const dispatch = useDispatch();
+  const reviewObj = useSelector((state) => state.reviews.spot);
+  const reviews = Object.values(reviewObj);
+  const sessionUser = useSelector((state) => state.session.user);
 
+  console.log(spot.ownerId)
+  useEffect(() => {
+    dispatch(getAllReviews(spotId));
+  }, [dispatch]);
 
-const SpotReviews = ({spotId}) => {
-    const dispatch = useDispatch()
-    const review = useSelector(state => state.reviews)
-    console.log("THIS IS THE REVIEWS", review);
+  // if(!sessionUser) return null;
 
-    useEffect(() => {
-        dispatch(getAllReviews(spotId))
-    }, [dispatch])
+  return (
+      <div className="reviews-container">
+      <h2>
+        <img src={leaf} className="leaf" alt="maple" /> {spotRating} • {numReviews} Reviews
+      </h2>
 
-    return (
-        <div className="reviews-container">
-                {/* <h3>⭐️ {spot.avgStarRating} • {spot.numReviews} Reviews</h3> */}
-                <h1>HI FROM SPOTREVIEWS.JS</h1>
-                <div className="review-details">
-                    <h3>Review's Name</h3>
-                    <h3>Review Date Created</h3>
-                    <h3>Review Details</h3>
-                </div>
-        </div>
-    )
-}
+      {/* !(reviews.find(review => review.userId === sessionUser.id)) && */}
+
+    {/* {
+    (sessionUser.id !== spot.ownerId) &&  (<OpenModalButton
+                  className="review-modal-button"
+                  buttonText="Post A Review"
+                  modalComponent={<ReviewModalButton spotId={spotId} />}
+    />)
+
+    } */}
+    
+      {reviews.map((review) => (
+        <>
+          <div className="review-box">
+            <h4>
+              {review.User?.firstName} {review.User?.lastName}
+            </h4>
+            <p>{review.createdAt}</p>
+            <div className="review-details">
+              <p>{review.review}</p>
+            </div>
+          </div>
+        </>
+      ))}
+    </div>
+  )
+};
 
 export default SpotReviews;

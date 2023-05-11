@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getAllSpots } from "../../store/spots";
+import leaf from "../../assets/mapleleaf.png";
 import "./Spots.css";
 
 const Spots = () => {
@@ -30,8 +31,8 @@ const Spots = () => {
               <div className="city-state-review">
                 {spot.city}, {spot.state}
                 <div className="ratings">
-                  <i className="fa-brands fa-canadian-maple-leaf"></i>
-                  {spot.avgRating ? spot.avgRating : "New"}
+                  <img src={leaf} className="leaf"/>
+                  {spot.avgRating ? Number(spot.avgRating).toFixed(1) : "New"}
                 </div>
               </div>
             </div>
