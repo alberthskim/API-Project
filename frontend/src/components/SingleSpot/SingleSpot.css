@@ -1,6 +1,9 @@
 .single-spot-container {
     padding-left: 1rem;
     padding-right: 1rem;
+    font-family: Roboto, 'Times New Roman', Times, serif;
+    font-weight: bold;
+    color: darkorange;
 }
 
 .single-spot-images {
@@ -57,3 +60,11 @@ img {
     border-radius: 1rem;
     border: 1px solid gray
 }
+
+/* .price {
+    width: 100%;
+}
+
+.reviews {
+    width: 100%;
+} */

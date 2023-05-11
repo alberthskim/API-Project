@@ -50,7 +50,7 @@ function ProfileButton({ user }) {
         {user ? <NavLink to="/spots/new" className="create-link">Create A Spot</NavLink> : ""}
       </div>
       <button onClick={openMenu} className="profile">
-        <i className="fa-solid fa-bars"></i>{" "}
+        <i className="fa-solid fa-bars"></i>
         <i className="fa-sharp fa-solid fa-circle-user"></i>
       </button>
       <ul className={ulClassName} ref={ulRef}>

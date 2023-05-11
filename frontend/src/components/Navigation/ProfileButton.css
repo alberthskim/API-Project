@@ -21,6 +21,9 @@ i {
     background-color: white;
     gap: .5rem;
     padding-right: 1.5rem;
+    padding-bottom: 2.5rem;
+    padding-left: 1.5rem;
+    padding-top: 1.5rem;
     border-radius: 1rem;
 }
 
@@ -42,6 +45,8 @@ i {
 
 .create-link {
     padding-top: 1rem;
+    color: red;
+    text-decoration: none;
 }
 
 li {
