@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { createASpot } from "../../store/spots";
 import "./SpotForm.css";
 
+
 const NewSpotForm = () => {
   const sessionUser = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ const NewSpotForm = () => {
   const [image2, setImage2] = useState("");
   const [image3, setImage3] = useState("");
   const [image4, setImage4] = useState("");
+  const [image5, setImage5] = useState("");
   const [validationErrors, setValidationErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
 
@@ -47,11 +49,11 @@ const NewSpotForm = () => {
     if (!name || name.length < 5 || name.length > 50)
       errors.name =
         "Name must exist and must be greater than 5 characters and less than 50 characters.";
-    if (!price || price < 0)
+    if (!price || price < 0 || !Number(price))
       errors.price = "Price must have a minimum of $0 a night.";
-    if (!image1) errors.image = "Please provide at least 1 image.";
+    if (!image1 || !image1.includes('.')) errors.image = "Please provide at least 1 image.";
     setValidationErrors(errors);
-  }, [country, address, city, state, description, name, price, image1, image2, image3, image4]);
+  }, [country, address, city, state, description, name, price, image1, image2, image3, image4, image5]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -71,7 +73,13 @@ const NewSpotForm = () => {
         price: Number(price)
       };
 
-      const newImage = [image1, image2, image3, image4];
+      const newImage = [image1, image2, image3, image4, image5];
+
+      for(let i = 0; i < newImage.length; i++) {
+        if(!newImage[i]) {
+          newImage[i] = "https://i.imgur.com/uvDIMUl.jpg"
+        }
+      }
 
       const makeNewSpot = await dispatch(createASpot(newSpot, newImage));
       history.push(`/spots/${makeNewSpot.id}`);
@@ -234,6 +242,12 @@ const NewSpotForm = () => {
                 value={image4}
                 onChange={(e) => setImage4(e.target.value)}
               />
+              <input
+                type="text"
+                name="url"
+                value={image5}
+                onChange={(e) => setImage4(e.target.value)}
+              />
             </div>
           </label>
           {validationErrors.image && submitted && (
@@ -241,7 +255,7 @@ const NewSpotForm = () => {
           )}
         </div>
 
-        <button type="submit" className="create-spot-button">
+        <button type="submit" className="create-spot-button" onClick={handleSubmit}>
           Create Spot
         </button>
       </form>

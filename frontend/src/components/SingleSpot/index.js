@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { getSingleSpot, getAllSpots } from "../../store/spots";
 import './SingleSpot.css'
 import leaf from "../../assets/mapleleaf.png";
+import noImage from "../../assets/no-image.png"
 import SpotReviews from "./SpotReviews";
 
 
@@ -36,7 +37,7 @@ const SingleSpot = () => {
                     <h2>{spot.city}, {spot.state}, {spot.country}</h2>
                 </div>
                 <div className="single-spot-images">
-                    {spot.SpotImages?.map((img, i) => img ? <img src={img.url} className={`images i${i}`} alt="pics"></img> : null)}
+                    {spot.SpotImages?.map((img, i) => img ? <img src={img.url} className={`images i${i}`} alt="pics"></img> : <img src={noImage} className={`images i${i}`} alt="noImage"></img>)}
                 </div>
                 <div className="spot-detail">
                     <div className="description">
