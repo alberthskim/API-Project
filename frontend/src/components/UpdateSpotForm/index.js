@@ -45,7 +45,7 @@ const UpdateSpotForm = () => {
     if (!name || name.length < 5 || name.length > 50)
       errors.name =
         "Name must exist and must be greater than 5 characters and less than 50 characters.";
-    if (!price || price < 0 )
+    if (!price || price < 0 || !Number(price))
       errors.price = "Price must have a minimum of $0 a night.";
     // if (!image1) errors.image = "Please provide at least 1 image.";
     setValidationErrors(errors);
@@ -205,6 +205,7 @@ const UpdateSpotForm = () => {
         <button
           type="submit"
           className="create-spot-button"
+          onClick={handleSubmit}
         >
           Update Spot
         </button>
