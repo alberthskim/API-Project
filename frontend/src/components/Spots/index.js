@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getAllSpots } from "../../store/spots";
 import leaf from "../../assets/mapleleaf.png";
-import noImage from "../../assets/no-image.png"
 import "./Spots.css";
 
 const Spots = () => {
@@ -24,7 +23,7 @@ const Spots = () => {
               {spot.previewImage ? (
                 <img id="spot-img" src={`${spot.previewImage}`} alt="" />
               ) : (
-                <img src={noImage} alt="noImage"/>
+                <p>Image Not Available</p>
               )}
             </div>
             <div className="spot-details">
