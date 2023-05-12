@@ -22,18 +22,17 @@ input {
 }
 
 .login-button {
-    color: white;
+    color: orange;
     font-weight: bold;
-    background-color: orange;
     padding: .5rem 1rem;
     border-radius: 1rem;
     width: 100%;
 }
 
 
-button:hover {
+.login-button:hover {
     color: orange;
-    background-color: white;
+    background-color: red;
 }
 
 .demo-button {
@@ -43,7 +42,11 @@ button:hover {
     text-decoration: underline;
     color: red
 }
-/* 
+/*
 .login-modal-container {
     width: 100%;
 } */
+
+.error {
+    color: red;
+}

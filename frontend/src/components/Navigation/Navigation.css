@@ -6,13 +6,12 @@ li {
     list-style: none;
 }
 
-
 .logo {
     text-decoration: none;
     color: orange;
 }
 
-ul {
+.nav-list {
     display: flex;
     width: 95%;
     align-items: center;
@@ -39,3 +38,11 @@ ul {
     gap: .3rem;
     font-family: 'Alike', serif;
 }
+
+
+/* .nav-container {
+    position: sticky;
+    top: 0px;
+    z-index: 1;
+    background-color: white;
+} */

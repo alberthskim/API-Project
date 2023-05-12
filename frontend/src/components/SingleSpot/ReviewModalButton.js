@@ -82,7 +82,7 @@ const ReviewModalButton = ({ spotId }) => {
               <i className="fa-solid fa-star medium-big-star clickable"></i>
             </div>
           </div>
-          <button type="submit" className="submit-review-button">
+          <button type="submit" className="submit-review-button" disabled={review.length <10 || !stars}>
             Submit Review
           </button>
         </div>
