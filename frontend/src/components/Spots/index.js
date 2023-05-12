@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getAllSpots } from "../../store/spots";
+import { dataReset, getAllSpots } from "../../store/spots";
 import leaf from "../../assets/mapleleaf.png";
 import "./Spots.css";
 
@@ -12,6 +12,7 @@ const Spots = () => {
 
   useEffect(() => {
     dispatch(getAllSpots());
+    return () => dispatch(dataReset())
   }, [dispatch]);
 
   return (
