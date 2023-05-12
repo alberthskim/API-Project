@@ -8,6 +8,11 @@
     justify-content: center;
     padding: .5rem 1rem;
     border-radius: 1rem;
+    color: orange
+}
+
+.submit-review-button:hover {
+    background-color: red;
 }
 
 .review-modal {

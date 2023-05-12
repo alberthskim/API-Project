@@ -15,20 +15,19 @@ i {
     border: 1px solid gray;
     position: absolute;
     right: 2.5rem;
-    width: 10rem;
-    display: flex;
-    flex-direction: column;
     background-color: white;
-    gap: .5rem;
-    padding-right: 1.5rem;
-    padding-bottom: 2.5rem;
-    padding-left: 1.5rem;
-    padding-top: 1.5rem;
+    padding-right: 2rem;
     border-radius: 1rem;
+    z-index: 1;
 }
 
 .login-signup {
     font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
 }
 
 .login-signup:hover {
@@ -40,7 +39,7 @@ i {
     right: 8.5rem;
     width: 6rem;
     height: 10rem;
-    top: 3.5rem;
+    top: 2.5rem;
 }
 
 .create-link {
@@ -49,12 +48,28 @@ i {
     text-decoration: none;
 }
 
-li {
-    padding-top: 1rem;
+.user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: .5rem;
 }
 
+.first-last-name {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    gap: .3rem;
+}
 
 .modal-button {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
     padding: .5rem 1rem;
     border-radius: 1rem;
+    width: 100%
 }

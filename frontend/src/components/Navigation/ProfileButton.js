@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
-import {NavLink} from "react-router-dom"
+import { NavLink } from "react-router-dom";
 import * as sessionActions from "../../store/session";
 import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
-import './ProfileButton.css';
+import "./ProfileButton.css";
 import { useHistory } from "react-router-dom";
 
 function ProfileButton({ user }) {
@@ -38,7 +38,7 @@ function ProfileButton({ user }) {
   const logout = (e) => {
     e.preventDefault();
     dispatch(sessionActions.logout());
-    history.push('/');
+    history.push("/");
     closeMenu();
   };
 
@@ -47,7 +47,13 @@ function ProfileButton({ user }) {
   return (
     <>
       <div className="login-user-ability">
-        {user ? <NavLink to="/spots/new" className="create-link">Create A Spot</NavLink> : ""}
+        {user ? (
+          <NavLink to="/spots/new" className="create-link">
+            Create A Spot
+          </NavLink>
+        ) : (
+          ""
+        )}
       </div>
       <button onClick={openMenu} className="profile">
         <i className="fa-solid fa-bars"></i>
@@ -56,15 +62,22 @@ function ProfileButton({ user }) {
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <li>{user.username}</li>
-            <li>
-              {user.firstName} {user.lastName}
-            </li>
-            <li>{user.email}</li>
-            <li><NavLink to="/spots/current">Manage Spots</NavLink></li>
-            <li>
-              <button onClick={logout} className="modal-button">Log Out</button>
-            </li>
+            <div className="user-info">
+              <div className="first-last-name">
+                <span>
+                  Hello, {user.firstName} {user.lastName}
+                </span>
+                <span>{user.email}</span>
+              </div>
+              <div>
+                <NavLink to="/spots/current">Manage Spots</NavLink>
+              </div>
+              <div>
+                <button onClick={logout} className="modal-button">
+                  Log Out
+                </button>
+              </div>
+            </div>
           </>
         ) : (
           <div className="login-signup">

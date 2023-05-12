@@ -49,13 +49,14 @@ img {
 
 .i1 {
     top: 0;
-    right: 0;
+    right: 25%;
 }
 
 .i2 {
     top: 0;
-    right: 25%;
+    right: 0;
 }
+
 
 .i3 {
     bottom: 0;
