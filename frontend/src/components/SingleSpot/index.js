@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getSingleSpot, getAllSpots } from "../../store/spots";
+import { getSingleSpot, getAllSpots, dataReset } from "../../store/spots";
 import './SingleSpot.css'
 import leaf from "../../assets/mapleleaf.png";
 import SpotReviews from "./SpotReviews";
@@ -18,6 +18,7 @@ const SingleSpot = () => {
     useEffect(() => {
         dispatch(getSingleSpot(spotId))
         dispatch(getAllSpots()).then(() => setIsLoaded(true))
+        return () => dispatch(dataReset())
     }, [dispatch])
 
     const handleReserve = () => {
@@ -46,7 +47,7 @@ const SingleSpot = () => {
                     <div className="booking">
                         <div className="price-review">
                         <span className="price">${spot.price} night</span>
-                        <span className="reviews"><img src={leaf} className="leaf"/> {spot.avgStarRating !== "NaN" ? Number(spot.avgStarRating).toFixed(1) : "New"} • {spot.numReviews} Reviews</span>
+                        <span className="reviews"><img src={leaf} className="leaf"/> {spot.avgStarRating !== "NaN" ? Number(spot.avgStarRating).toFixed(1) : "New"} {spot.numReviews === 0 ? null : (spot.numReviews <= 1 ? `• ${spot.numReviews} Review` : `• ${spot.numReviews} Reviews`)}</span>
 
                         </div>
                         <button onClick={handleReserve} className="reserve">Reserve</button>

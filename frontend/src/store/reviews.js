@@ -48,6 +48,7 @@ export const addAReview = (review, spotId) => async (dispatch) => {
         body: JSON.stringify(review)
     });
 
+    //pass in user to make it more efficient
     if(response.ok) {
         const newReview = await response.json();
         dispatch(addReview(newReview));

@@ -22,11 +22,12 @@ const SpotReviews = ({ spotId, spotRating, numReviews, spot }) => {
   }, [dispatch, spotId]);
 
 
+
   return (
     <div className="reviews-container">
       <h2>
         <img src={leaf} className="leaf" alt="maple" />{" "}
-        {spotRating === "NaN" ? "New" : Number(spotRating).toFixed(1)} • {numReviews} Reviews
+        {spotRating === "NaN" ? "New" : Number(spotRating).toFixed(1)} {numReviews === 0 ? null : (numReviews <= 1  ? `• ${numReviews} Review` : `• ${numReviews} Reviews`)}
       </h2>
 
       {sessionUser && sessionUser?.id !== spot.ownerId &&

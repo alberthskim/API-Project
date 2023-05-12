@@ -6,6 +6,7 @@ const CREATE_A_SPOT = "spots/CREATE_A_SPOT";
 const GET_CURRENT_USER_SPOTS = "spots/GET_CURRENT_USER_SPOTS"
 const UPDATE_A_SPOT = "spots/UPDATE_A_SPOT";
 const DELETE_A_SPOT = "spots/DELETE_A_SPOT";
+const RESET_DATA = "spots/RESET_DATA"
 
 //ACTIONS FOR SPOTS
 export const loadSpots = (spots) => {
@@ -47,6 +48,12 @@ export const removeASpot = (spotId) => {
   return {
     type: DELETE_A_SPOT,
     spotId
+  }
+}
+
+export const dataReset = () => {
+  return {
+    type: RESET_DATA,
   }
 }
 
@@ -176,6 +183,9 @@ const spotReducer = (state = initialState, action) => {
       const newState = {...state, allSpots:{...state.allSpots}};
       delete newState.allSpots[action.spotId]
       return newState;
+    }
+    case RESET_DATA: {
+      return initialState;
     }
     default: {
       return state;
