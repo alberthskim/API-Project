@@ -27,6 +27,16 @@ module.exports = {
           preview: false,
         },
         {
+          spotId: 1,
+          url: "https://i.imgur.com/6J32ts0.png",
+          preview: false,
+        },
+        {
+          spotId: 1,
+          url: "https://i.imgur.com/pNCLtjG.png",
+          preview: false,
+        },
+        {
           spotId: 2,
           url: "https://i.imgur.com/oiTslYm.png",
           preview: true,
@@ -42,9 +52,39 @@ module.exports = {
           preview: false,
         },
         {
+          spotId: 2,
+          url: "https://i.imgur.com/anEoBo4.png",
+          preview: false,
+        },
+        {
+          spotId: 2,
+          url: "https://i.imgur.com/pNCLtjG.png",
+          preview: false,
+        },
+        {
           spotId: 3,
           url: "https://i.imgur.com/Uzs8Sv7.png",
           preview: true,
+        },
+        {
+          spotId: 3,
+          url: "https://i.imgur.com/2KSuw8u.png",
+          preview: false,
+        },
+        {
+          spotId: 3,
+          url: "https://i.imgur.com/ZJ5dHQG.png",
+          preview: false,
+        },
+        {
+          spotId: 3,
+          url: "https://i.imgur.com/nuHSLVE.jpg",
+          preview: false,
+        },
+        {
+          spotId: 3,
+          url: "https://i.imgur.com/GNNDUBp.jpg",
+          preview: false,
         },
         {
           spotId: 4,
@@ -92,6 +132,11 @@ module.exports = {
           preview: false,
         },
         {
+          spotId: 5,
+          url: "https://i.imgur.com/AB7I8BH.jpg",
+          preview: false,
+        },
+        {
           spotId: 6,
           url: "https://i.imgur.com/kAQ8roM.png",
           preview: true,
@@ -112,6 +157,11 @@ module.exports = {
           preview: false,
         },
         {
+          spotId: 6,
+          url: "https://i.imgur.com/j6MRJ4J.png",
+          preview: false,
+        },
+        {
           spotId: 7,
           url: "https://i.imgur.com/p0xwqxC.png",
           preview: true,
@@ -124,6 +174,16 @@ module.exports = {
         {
           spotId: 7,
           url: "https://i.imgur.com/0fbTpkO.png",
+          preview: false,
+        },
+        {
+          spotId: 7,
+          url: "https://i.imgur.com/iGFMDwV.png",
+          preview: false,
+        },
+        {
+          spotId: 7,
+          url: "https://i.imgur.com/EwTAbUu.png",
           preview: false,
         },
         {
@@ -147,6 +207,11 @@ module.exports = {
           preview: false,
         },
         {
+          spotId: 8,
+          url: "https://i.imgur.com/4OwSUcF.jpg",
+          preview: false,
+        },
+        {
           spotId: 9,
           url: "https://i.imgur.com/wa9IrC1.png",
           preview: true,
@@ -159,6 +224,16 @@ module.exports = {
         {
           spotId: 9,
           url: "https://i.imgur.com/ytCyIqM.png",
+          preview: false,
+        },
+        {
+          spotId: 9,
+          url: "https://i.imgur.com/elQGyNy.png",
+          preview: false,
+        },
+        {
+          spotId: 9,
+          url: "https://i.imgur.com/AGasrK4.png",
           preview: false,
         },
         {
@@ -179,6 +254,11 @@ module.exports = {
         {
           spotId: 10,
           url: "https://i.imgur.com/HD37aBi.png",
+          preview: false,
+        },
+        {
+          spotId: 10,
+          url: "https://i.imgur.com/ER9zThh.jpg",
           preview: false,
         },
         {
@@ -208,8 +288,13 @@ module.exports = {
         },
         {
           spotId: 12,
-          url: "https://i.imgur.com/nHW7r8V.png",
+          url: "https://i.imgur.com/6MaA65l.png",
           preview: true,
+        },
+        {
+          spotId: 12,
+          url: "https://i.imgur.com/nHW7r8V.png",
+          preview: false,
         },
         {
           spotId: 12,

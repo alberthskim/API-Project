@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { updateASpot } from "../../store/spots";
+import { getSingleSpot } from "../../store/spots";
 // import "./SpotForm.css";
 
 const UpdateSpotForm = () => {
@@ -21,6 +22,19 @@ const UpdateSpotForm = () => {
   const [price, setPrice] = useState("");
   const [validationErrors, setValidationErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    dispatch(getSingleSpot(spotId))
+    .then(data => {
+      setCountry(data.country)
+      setAddress(data.address)
+      setCity(data.city)
+      setState(data.state)
+      setDescription(data.description)
+      setName(data.name)
+      setPrice(data.price)
+    })
+  }, [dispatch])
 
 
   useEffect(() => {
