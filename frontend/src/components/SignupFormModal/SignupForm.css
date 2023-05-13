@@ -20,6 +20,7 @@ label {
     color: white;
     font-weight: bold;
     background-color: orange;
+    /* border: 1px solid red; */
     padding: .5rem 1rem;
     border-radius: 1rem;
     width: 100%;
@@ -29,3 +30,7 @@ button:hover {
     color: orange;
     background-color: white;
 }
+
+/* .signup-form {
+    di
+} */
