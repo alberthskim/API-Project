@@ -51,7 +51,14 @@ const NewSpotForm = () => {
         "Name must exist and must be greater than 5 characters and less than 50 characters.";
     if (!price || price < 0 || !Number(price))
       errors.price = "Price must have a minimum of $0 a night.";
-    if (!image1 || !image1.includes('.')) errors.image = "Please provide at least 1 image.";
+    if (!image1) errors.image = "Please provide a valid preview image."
+    if (image1 && (!image1.includes('.png') && !image1.includes('.jpeg') && !image1.includes('.jpg'))) errors.image1 = "Image URL must end in .png, .jpg, .jpeg"
+    if(image2 && (!image2.includes('.png') || !image2.includes('.jpeg') || !image2.includes('.jpg'))) errors.image2 = "Image URL must end in .png, .jpg, .jpeg"
+    if(image3 && (!image3.includes('.png') || !image3.includes('.jpeg') || !image3.includes('.jpg'))) errors.image3 = "Image URL must end in .png, .jpg, .jpeg"
+    if(image4 && (!image4.includes('.png') || !image4.includes('.jpeg') || !image4.includes('.jpg'))) errors.image4 = "Image URL must end in .png, .jpg, .jpeg"
+    if(image5 && (!image5.includes('.png') || !image5.includes('.jpeg') || !image5.includes('.jpg'))) errors.image5 = "Image URL must end in .png, .jpg, .jpeg"
+
+
     setValidationErrors(errors);
   }, [country, address, city, state, description, name, price, image1, image2, image3, image4, image5]);
 
@@ -108,6 +115,7 @@ const NewSpotForm = () => {
             <input
               type="text"
               name="country"
+              placeholder="Country"
               value={country}
               onChange={(e) => setCountry(e.target.value)}
             />
@@ -120,6 +128,7 @@ const NewSpotForm = () => {
             <input
               type="text"
               name="address"
+              placeholder="Address"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
             />
@@ -132,6 +141,7 @@ const NewSpotForm = () => {
             <input
               type="text"
               name="city"
+              placeholder="City"
               value={city}
               onChange={(e) => setCity(e.target.value)}
             />
@@ -144,6 +154,7 @@ const NewSpotForm = () => {
             <input
               type="text"
               name="state"
+              placeholder="STATE"
               value={state}
               onChange={(e) => setState(e.target.value)}
             />
@@ -166,7 +177,7 @@ const NewSpotForm = () => {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows="10"
-              placeholder="Please write description of home"
+              placeholder="Please write a description of your home..."
             ></textarea>
           </label>
           {validationErrors.description && submitted && (
@@ -184,6 +195,7 @@ const NewSpotForm = () => {
             <input
               type="text"
               name="name"
+              placeholder="Name of your spot"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
@@ -203,7 +215,7 @@ const NewSpotForm = () => {
             <input
               type="text"
               name="number"
-              placeholder="$"
+              placeholder="Price per night (USD)"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
             />
@@ -216,43 +228,64 @@ const NewSpotForm = () => {
         <div className="url-container">
           <label>
             <h2>Liven up your spot with photos</h2>
-            <p>Submit a link to atleast one photo to publish your spot</p>
+            <p>Submit a link to at least one photo to publish your spot</p>
             <div className="input-container">
               <input
                 type="text"
                 name="url"
+                placeholder="Preview Image URL"
                 value={image1}
                 onChange={(e) => setImage1(e.target.value)}
               />
+              {validationErrors.image && submitted && (
+           <p className="errors">{validationErrors.image}</p>
+         )}
+              {validationErrors.image1 && submitted && (
+           <p className="errors">{validationErrors.image1}</p>
+         )}
               <input
                 type="text"
                 name="url"
+                placeholder="Image 2 URL"
                 value={image2}
+                required
                 onChange={(e) => setImage2(e.target.value)}
               />
+              {validationErrors.image2 && submitted && (
+           <p className="errors">{validationErrors.image2}</p>
+         )}
               <input
                 type="text"
                 name="url"
+                placeholder="Image 3 URL"
                 value={image3}
                 onChange={(e) => setImage3(e.target.value)}
               />
+              {validationErrors.image3 && submitted && (
+           <p className="errors">{validationErrors.image3}</p>
+         )}
               <input
                 type="text"
                 name="url"
+                placeholder="Image 4 URL"
                 value={image4}
                 onChange={(e) => setImage4(e.target.value)}
               />
+              {validationErrors.image4 && submitted && (
+           <p className="errors">{validationErrors.image4}</p>
+         )}
               <input
                 type="text"
                 name="url"
+                placeholder="Image 5 URL"
                 value={image5}
                 onChange={(e) => setImage5(e.target.value)}
               />
+              {validationErrors.image5 && submitted && (
+           <p className="errors">{validationErrors.image5}</p>
+         )}
             </div>
           </label>
-          {validationErrors.image && submitted && (
-            <p className="errors">{validationErrors.image}</p>
-          )}
         </div>
 
         <button type="submit" className="create-spot-button" onClick={handleSubmit}>

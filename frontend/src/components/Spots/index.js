@@ -12,7 +12,7 @@ const Spots = () => {
 
   useEffect(() => {
     dispatch(getAllSpots());
-    return () => dispatch(dataReset())
+    return () => dispatch(dataReset());
   }, [dispatch]);
 
   return (
@@ -21,18 +21,21 @@ const Spots = () => {
         <Link to={`/spots/${spot.id}`} className="spot-details">
           <div className="spots">
             <div className="spotimg">
-              {spot.previewImage ? (
-                <img id="spot-img" src={`${spot.previewImage}`} alt="" />
-              ) : (
-                <p>Image Not Available</p>
-              )}
+              <div className="tooltip">
+                {spot.previewImage ? (
+                  <img id="spot-img" src={`${spot.previewImage}`} alt="" />
+                ) : (
+                  <p>Image Not Available</p>
+                )}
+                <span className="tooltiptext">{spot.name}</span>
+              </div>
             </div>
+
             <div className="spot-details">
-              {/* <div className="name">{spot.name}</div> */}
               <div className="city-state-review">
                 {spot.city}, {spot.state}
                 <div className="ratings">
-                  <img src={leaf} className="leaf"/>
+                  <img src={leaf} className="leaf" />
                   {spot.avgRating ? Number(spot.avgRating).toFixed(1) : "New"}
                 </div>
               </div>

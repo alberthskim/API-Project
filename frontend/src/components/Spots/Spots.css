@@ -45,3 +45,25 @@
     width: 18px;
     transform: rotate(135deg);
 }
+
+.tooltip {
+  position: relative;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 60%;
+  background-color: white;
+  color: orange;
+  text-align: center;
+  border-radius: 6px;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  position: absolute;
+  z-index: 100;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
