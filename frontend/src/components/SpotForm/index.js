@@ -53,10 +53,10 @@ const NewSpotForm = () => {
       errors.price = "Price must have a minimum of $0 a night.";
     if (!image1) errors.image = "Please provide a valid preview image."
     if (image1 && (!image1.includes('.png') && !image1.includes('.jpeg') && !image1.includes('.jpg'))) errors.image1 = "Image URL must end in .png, .jpg, .jpeg"
-    if(image2 && (!image2.includes('.png') || !image2.includes('.jpeg') || !image2.includes('.jpg'))) errors.image2 = "Image URL must end in .png, .jpg, .jpeg"
-    if(image3 && (!image3.includes('.png') || !image3.includes('.jpeg') || !image3.includes('.jpg'))) errors.image3 = "Image URL must end in .png, .jpg, .jpeg"
-    if(image4 && (!image4.includes('.png') || !image4.includes('.jpeg') || !image4.includes('.jpg'))) errors.image4 = "Image URL must end in .png, .jpg, .jpeg"
-    if(image5 && (!image5.includes('.png') || !image5.includes('.jpeg') || !image5.includes('.jpg'))) errors.image5 = "Image URL must end in .png, .jpg, .jpeg"
+    if(image2 && (!image2.includes('.png') && !image2.includes('.jpeg') && !image2.includes('.jpg'))) errors.image2 = "Image URL must end in .png, .jpg, .jpeg"
+    if(image3 && (!image3.includes('.png') && !image3.includes('.jpeg') && !image3.includes('.jpg'))) errors.image3 = "Image URL must end in .png, .jpg, .jpeg"
+    if(image4 && (!image4.includes('.png') && !image4.includes('.jpeg') && !image4.includes('.jpg'))) errors.image4 = "Image URL must end in .png, .jpg, .jpeg"
+    if(image5 && (!image5.includes('.png') && !image5.includes('.jpeg') && !image5.includes('.jpg'))) errors.image5 = "Image URL must end in .png, .jpg, .jpeg"
 
 
     setValidationErrors(errors);
