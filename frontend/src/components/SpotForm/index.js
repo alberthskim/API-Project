@@ -246,7 +246,7 @@ const NewSpotForm = () => {
                 type="text"
                 name="url"
                 value={image5}
-                onChange={(e) => setImage4(e.target.value)}
+                onChange={(e) => setImage5(e.target.value)}
               />
             </div>
           </label>
