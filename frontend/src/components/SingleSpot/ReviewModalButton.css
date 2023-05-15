@@ -33,3 +33,10 @@
 .mapleleaf {
     color: lightgray;
 }
+
+.star-div {
+    display: flex;
+    padding-left: .5rem;
+    justify-content: center;
+    align-items: center;
+}

@@ -32,7 +32,7 @@ const ReviewModalButton = ({ spotId }) => {
           <h2>How Was Your Stay?</h2>
           <textarea
             className="review-text"
-            placeholder="Write a review..."
+            placeholder="Leave your review here..."
             value={review}
             onChange={(e) => setReview(e.target.value)}
             rows={10}
@@ -81,9 +81,10 @@ const ReviewModalButton = ({ spotId }) => {
               {/* <i class="fa-light fa-leaf-maple"></i> */}
               <i className="fa-solid fa-star medium-big-star clickable"></i>
             </div>
+            <div className="star-div">Stars</div>
           </div>
           <button type="submit" className="submit-review-button" disabled={review.length <10 || !stars} onClick={handleReview}>
-            Submit Review
+            Submit Your Review
           </button>
         </div>
       </form>

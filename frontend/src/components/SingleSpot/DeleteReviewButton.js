@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { deleteAReview } from "../../store/reviews";
 import { getSingleSpot } from "../../store/spots";
+import "./DeleteReviewButton.css";
 
 const DeleteReviewButton = ({ reviewId, spotId }) => {
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ const DeleteReviewButton = ({ reviewId, spotId }) => {
 
   return (
     <div className="delete-review">
-      <h2>Confirm Delete</h2>
+      <h2 className="confirm-delete">Confirm Delete</h2>
       <p>Are you sure you want to delete this review?</p>
       <div className="delete-button-container">
         <button onClick={deletehandler} className="delete-button">

@@ -168,7 +168,7 @@ const NewSpotForm = () => {
           <label>
             <h2>Describe your place to guests</h2>
             <p>
-              Mention the best features of your space, any special amentities
+              Mention the best features of your space, any special amenities
               like fast wifi or parking, and what you love about the
               neighborhood.
             </p>
@@ -177,7 +177,7 @@ const NewSpotForm = () => {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows="10"
-              placeholder="Please write a description of your home..."
+              placeholder="Please write at least a 30 character description of your home..."
             ></textarea>
           </label>
           {validationErrors.description && submitted && (
