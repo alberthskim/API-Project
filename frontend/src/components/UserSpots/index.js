@@ -30,7 +30,7 @@ const UserSpots = () => {
   return (
     <>
       <div className="manage-header">
-        <h1 className="manage">Manage Your Spots</h1>
+        <h1 className="manage">Manage Spots</h1>
         <button className="newSpot">
           <Link to={"/spots/new"} className="newspot-link">
             Create A New Spot
@@ -40,7 +40,6 @@ const UserSpots = () => {
       <div className="spot-container">
         {spots.map((spot) => (
           <>
-          {console.log("This is spot", spot)}
             <div className="spots">
               <Link to={`/spots/${spot.id}`} className="spot-details">
                 <div className="spotimg">
@@ -76,5 +75,11 @@ const UserSpots = () => {
     </>
   );
 };
+
+
+
+
+
+
 
 export default UserSpots;
