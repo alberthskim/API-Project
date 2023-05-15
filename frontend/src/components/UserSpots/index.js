@@ -14,6 +14,8 @@ const UserSpots = () => {
   const spotsObj = useSelector((state) => state.spots.allSpots);
   const spots = Object.values(spotsObj);
 
+  console.log("spotsObj", spotsObj)
+
   useEffect(() => {
     dispatch(getUserSpots());
   }, [dispatch]);
@@ -38,6 +40,7 @@ const UserSpots = () => {
       <div className="spot-container">
         {spots.map((spot) => (
           <>
+          {console.log("This is spot", spot)}
             <div className="spots">
               <Link to={`/spots/${spot.id}`} className="spot-details">
                 <div className="spotimg">

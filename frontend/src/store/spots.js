@@ -89,13 +89,22 @@ export const createASpot = (spot, images) => async (dispatch) => {
   if (response.ok) {
     const newSpot = await response.json();
     for(let i = 0; i < images.length; i++) {
-      if(images[i]) {
+      if(i === 0) { //Needs to make the first image the preview image in manageSpots.
         await csrfFetch(`/api/spots/${newSpot.id}/images`, {
           method: "POST",
           headers: {"Content-Type": "application/json"},
           body: JSON.stringify({
             url: images[i],
             preview: true
+          })
+        })
+      } else {
+        await csrfFetch(`/api/spots/${newSpot.id}/images`, {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({
+            url: images[i],
+            preview: false
           })
         })
       }
@@ -166,7 +175,7 @@ const spotReducer = (state = initialState, action) => {
       return newState;
     }
     case GET_CURRENT_USER_SPOTS: {
-      let newState = {allSpots: {}, singleSpot: { SpotImages: [] }};
+      let newState = {allSpots: {}, singleSpot: {}};
       const newSpots = {};
       action.spots.forEach(spot => {
         newSpots[spot.id] = spot
