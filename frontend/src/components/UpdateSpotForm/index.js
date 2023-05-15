@@ -218,7 +218,7 @@ const UpdateSpotForm = () => {
         </div>
         <button
           type="submit"
-          className="create-spot-button"
+          className="create-spot-button update-spot-button"
           onClick={handleSubmit}
         >
           Update Spot
