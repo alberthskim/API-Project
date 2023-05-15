@@ -39,7 +39,7 @@ const SpotReviews = ({ spotId, spotRating, numReviews, spot }) => {
           />
         )}
 
-      {reviews.map((review) => (
+      {reviews.toReversed().map((review) => (
         <>
           <div className="review-box">
             <h4>

@@ -70,7 +70,7 @@ function ProfileButton({ user }) {
                 <span>{user.email}</span>
               </div>
               <div>
-                <NavLink to="/spots/current">Manage Spots</NavLink>
+                <NavLink to="/spots/current" onClick={closeMenu}>Manage Spots</NavLink>
               </div>
               <div>
                 <button onClick={logout} className="modal-button">
