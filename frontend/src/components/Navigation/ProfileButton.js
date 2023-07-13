@@ -73,6 +73,9 @@ function ProfileButton({ user }) {
                 <NavLink to="/spots/current" onClick={closeMenu}>Manage Spots</NavLink>
               </div>
               <div>
+                <NavLink to={`/user/${user.id}/bookings`} onClick={closeMenu}>Manage Bookings</NavLink>
+              </div>
+              <div>
                 <button onClick={logout} className="modal-button">
                   Log Out
                 </button>
