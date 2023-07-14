@@ -127,3 +127,12 @@ img {
 .reviews {
     width: 100%;
 } */
+
+
+.check-in-out {
+    display: flex;
+}
+
+.date-input {
+    text-decoration: none;
+}

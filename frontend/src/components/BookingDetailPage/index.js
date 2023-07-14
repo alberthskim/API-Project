@@ -54,7 +54,7 @@ function BookingDetailPage() {
               })}
             </>
             ) : (
-            <p>Start Booking Now</p>
+              <button onClick={() => history.push('/')}>Start Booking Now</button>
             )}
         </div>
         <div className="spot-container" style={{display: "flex", flexDirection:"column"}}>
