@@ -543,10 +543,10 @@ router.get("/:spotId/bookings", requireAuth, async (req, res) => {
       where: {
         spotId: req.params.spotId,
       },
-      attributes: ["spotId", "startDate", "endDate"],
+      attributes: ["id", "spotId", "startDate", "endDate"],
     });
     return res.json({
-      Booking: bookings,
+      Bookings: bookings,
     });
   }
 
@@ -572,6 +572,7 @@ router.get("/:spotId/bookings", requireAuth, async (req, res) => {
 router.post("/:spotId/bookings", requireAuth, async (req, res) => {
   const user = req.user;
   let { startDate, endDate } = req.body;
+  console.log("THIS IS BACKEND", startDate, endDate)
   let currentDate = Date.now();
   const spot = await Spot.findByPk(req.params.spotId);
 

@@ -15,6 +15,7 @@ const SingleSpot = () => {
     const dispatch = useDispatch();
     const spot = useSelector(state => state.spots.singleSpot)
     const spotBookings = Object.values(useSelector(state => state.bookings.spot));
+    const sessionUser = useSelector(state => state.session.user)
     const [isLoaded, setIsLoaded] = useState(false);
     const [startDate, setStartDate] = useState("")
     const [endDate, setEndDate] = useState("")
@@ -35,21 +36,18 @@ const SingleSpot = () => {
         const format = {year: 'numeric', month: '2-digit', day: '2-digit'}
         const formattedDate = todaysDate.toLocaleDateString(undefined, format)
         const formatForCreation = sortFormatFunction(formattedDate.split('/').reverse())
-        console.log("This is the new formatted array", formatForCreation)
 
-        console.log("This is the startDate", startDate)
-        console.log("This is the endDate", endDate)
-        if (startDate < formatForCreation || endDate < formatForCreation) errors.date = "Check In Date Or Check Out Date Cannot Be In The Past."
-        console.log(startDate > formatForCreation)
+        if (!startDate || !endDate) errors.need = "Must Input a start and end Date"
+        if ((startDate && startDate < formatForCreation) || (endDate && endDate < formatForCreation)) errors.date = "Check In Date Or Check Out Date Cannot Be In The Past."
 
         for (let i = 0; i < spotBookings.length; i++) {
             let current = spotBookings[i]
-            if (current.startDate.slice(0, 10) < startDate < current.endDate.slice(0, 10)) errors.existsOnStart = "Booking already exists between those start dates"
-            if (current.startDate.slice(0, 10) < endDate < current.endDate.slice(0, 10)) errors.existsOnEnd = "Booking already exists between those end dates"
+            console.log("Current slice", ((current.startDate).toString().slice(0,10)))
+            if (((current.startDate).toString().slice(0, 10) <= startDate) && (startDate <= (current.endDate).toString().slice(0, 10))) errors.existsOnStart = "Booking already exists between those start dates"
+            if (((current.startDate).toString().slice(0, 10) <= endDate) && (endDate <= (current.endDate).toString().slice(0, 10))) errors.existsOnEnd = "Booking already exists between those end dates"
         }
 
         setValidationErrors(errors);
-        console.log("validation Errors", validationErrors)
     }, [startDate, endDate])
 
     const sortFormatFunction = (formatArr) => {
@@ -73,9 +71,10 @@ const SingleSpot = () => {
                 endDate
             }
 
-            console.log("THIS IS THE Booking", spotId, newBooking)
+            dispatch(createABookingThunk(spotId, newBooking))
+
+            alert("Spot has been Booked!")
         }
-        // dispatch(createABookingThunk(spotId, {startDate, endDate}))
     }
 
 
@@ -103,17 +102,23 @@ const SingleSpot = () => {
                         <span className="reviews"><img src={leaf} className="leaf"/> {spot.avgStarRating !== "NaN" ? Number(spot.avgStarRating).toFixed(1) : "New"} {spot.numReviews === 0 ? null : (spot.numReviews <= 1 ? `• ${spot.numReviews} Review` : `• ${spot.numReviews} Reviews`)}</span>
 
                         </div>
+                            {validationErrors.need && submitted && (
+                                <p className="errors">{validationErrors.need}</p>
+                            )}
+                            {validationErrors.date && submitted && (
+                                <p className="errors">{validationErrors.date}</p>
+                            )}
+                            {validationErrors.existsOnStart && submitted && (
+                                <p className="errors">{validationErrors.existsOnStart}</p>
+                            )}
+                            {validationErrors.existsOnEnd && submitted && (
+                                <p className="errors">{validationErrors.existsOnEnd}</p>
+                            )}
+                            {validationErrors.errors && submitted && (
+                                <p className="errors">{validationErrors.errors}</p>
+                            )}
                         <form onSubmit={handleSubmit}>
                             <div className="check-in-out">
-                                {validationErrors.date && submitted && (
-                                    <p className="errors">{validationErrors.date}</p>
-                                )}
-                                {validationErrors.startDate && submitted && (
-                                    <p className="errors">{validationErrors.startDate}</p>
-                                )}
-                                {validationErrors.endDate && submitted && (
-                                    <p className="errors">{validationErrors.endDate}</p>
-                                )}
                                 <label>Check-In:
                                     <input className="date-input" type="date" dateFormat="yyyy/MM/dd" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
                                 </label>
@@ -121,7 +126,7 @@ const SingleSpot = () => {
                                     <input className="date-input" type="date" dateFormat="yyyy/MM/dd" value={endDate} onChange={(e) => setEndDate(e.target.value)}/>
                                 </label>
                             </div>
-                            <button className="reserve">Reserve</button>
+                            {sessionUser.id === spot.Owner.id ? null : <button className="reserve">Reserve</button> }
                         </form>
                     </div>
                 </div>
