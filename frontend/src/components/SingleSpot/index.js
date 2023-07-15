@@ -41,7 +41,7 @@ const SingleSpot = () => {
         if (!startDate || !endDate) errors.need = "Must Input A Start And End Date."
         if (startDate > endDate) errors.deny = "End Date Cannot Be Before Start Date."
         if (startDate === endDate) errors.same = "Start Date and End Date Can't Be The Same."
-        if ((startDate && startDate < formatForCreation) || (endDate && endDate < formatForCreation)) errors.date = "Check In Date Or Check Out Date Cannot Be In The Past."
+        if ((startDate && startDate < formatForCreation) || (endDate && endDate < formatForCreation)) errors.date = "Cannot Create Reservation In The Past."
         if (startDate === formatForCreation) errors.today = "Cannot Book Last Minute!"
 
         for (let i = 0; i < spotBookings.length; i++) {
