@@ -39,10 +39,10 @@ const SingleSpot = () => {
 
         if (!startDate || !endDate) errors.need = "Must Input a start and end Date"
         if ((startDate && startDate < formatForCreation) || (endDate && endDate < formatForCreation)) errors.date = "Check In Date Or Check Out Date Cannot Be In The Past."
+        if (startDate === formatForCreation) errors.today = "Cannot Book Last Minute!"
 
         for (let i = 0; i < spotBookings.length; i++) {
             let current = spotBookings[i]
-            console.log("Current slice", ((current.startDate).toString().slice(0,10)))
             if (((current.startDate).toString().slice(0, 10) <= startDate) && (startDate <= (current.endDate).toString().slice(0, 10))) errors.existsOnStart = "Booking already exists between those start dates"
             if (((current.startDate).toString().slice(0, 10) <= endDate) && (endDate <= (current.endDate).toString().slice(0, 10))) errors.existsOnEnd = "Booking already exists between those end dates"
         }
@@ -72,7 +72,7 @@ const SingleSpot = () => {
             }
 
             dispatch(createABookingThunk(spotId, newBooking))
-
+            dispatch(getAllSpotBookingThunk(spotId))
             alert("Spot has been Booked!")
         }
     }
@@ -114,8 +114,8 @@ const SingleSpot = () => {
                             {validationErrors.existsOnEnd && submitted && (
                                 <p className="errors">{validationErrors.existsOnEnd}</p>
                             )}
-                            {validationErrors.errors && submitted && (
-                                <p className="errors">{validationErrors.errors}</p>
+                            {validationErrors.today && submitted && (
+                                <p className="errors">{validationErrors.today}</p>
                             )}
                         <form onSubmit={handleSubmit}>
                             <div className="check-in-out">

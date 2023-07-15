@@ -543,7 +543,12 @@ router.get("/:spotId/bookings", requireAuth, async (req, res) => {
       where: {
         spotId: req.params.spotId,
       },
-      attributes: ["id", "spotId", "startDate", "endDate"],
+      include: [
+        {
+          model: User,
+          attributes: ["id", "firstName", "lastName", "spotId", "startDate", "endDate"],
+        }
+      ]
     });
     return res.json({
       Bookings: bookings,
@@ -558,7 +563,7 @@ router.get("/:spotId/bookings", requireAuth, async (req, res) => {
       include: [
         {
           model: User,
-          attributes: ["id", "firstName", "lastName"],
+          attributes: ["id", "firstName", "lastName", "spotId", "startDate", "endDate"],
         },
       ],
     });
@@ -572,13 +577,11 @@ router.get("/:spotId/bookings", requireAuth, async (req, res) => {
 router.post("/:spotId/bookings", requireAuth, async (req, res) => {
   const user = req.user;
   let { startDate, endDate } = req.body;
-  console.log("THIS IS BACKEND", startDate, endDate)
   let currentDate = Date.now();
   const spot = await Spot.findByPk(req.params.spotId);
 
   //Non-existent Spot error -GOOD TO GO
   if (!spot) {
-    res.status(404);
     return res.json({
       message: "Spot couldn't be found",
     });
