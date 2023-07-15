@@ -96,6 +96,7 @@ const bookingReducer = (state = initialState, action) => {
         case DELETE_BOOKING: {
             const newState = {...state, user: {...state.user}, spot: {...state.spot}};
             delete newState.user[action.bookingId]
+            delete newState.spot[action.bookingId]
             return newState;
         }
         default:

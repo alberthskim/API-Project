@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { getSingleSpot, getAllSpots, dataReset } from "../../store/spots";
 import './SingleSpot.css'
 import leaf from "../../assets/mapleleaf.png";
@@ -13,6 +13,7 @@ import {createABookingThunk, getAllSpotBookingThunk} from "../../store/bookings"
 const SingleSpot = () => {
     const { spotId } = useParams();
     const dispatch = useDispatch();
+    const history = useHistory();
     const spot = useSelector(state => state.spots.singleSpot)
     const spotBookings = Object.values(useSelector(state => state.bookings.spot));
     const sessionUser = useSelector(state => state.session.user)
@@ -37,14 +38,16 @@ const SingleSpot = () => {
         const formattedDate = todaysDate.toLocaleDateString(undefined, format)
         const formatForCreation = sortFormatFunction(formattedDate.split('/').reverse())
 
-        if (!startDate || !endDate) errors.need = "Must Input a start and end Date"
+        if (!startDate || !endDate) errors.need = "Must Input A Start And End Date."
+        if (startDate > endDate) errors.deny = "End Date Cannot Be Before Start Date."
+        if (startDate === endDate) errors.same = "Start Date and End Date Can't Be The Same."
         if ((startDate && startDate < formatForCreation) || (endDate && endDate < formatForCreation)) errors.date = "Check In Date Or Check Out Date Cannot Be In The Past."
         if (startDate === formatForCreation) errors.today = "Cannot Book Last Minute!"
 
         for (let i = 0; i < spotBookings.length; i++) {
             let current = spotBookings[i]
-            if (((current.startDate).toString().slice(0, 10) <= startDate) && (startDate <= (current.endDate).toString().slice(0, 10))) errors.existsOnStart = "Booking already exists between those start dates"
-            if (((current.startDate).toString().slice(0, 10) <= endDate) && (endDate <= (current.endDate).toString().slice(0, 10))) errors.existsOnEnd = "Booking already exists between those end dates"
+            if (((current.startDate).toString().slice(0, 10) <= startDate) && (startDate <= (current.endDate).toString().slice(0, 10))) errors.existsOnStart = "Booking already exists between those start dates."
+            if (((current.startDate).toString().slice(0, 10) <= endDate) && (endDate <= (current.endDate).toString().slice(0, 10))) errors.existsOnEnd = "Booking already exists between those end dates."
         }
 
         setValidationErrors(errors);
@@ -65,6 +68,8 @@ const SingleSpot = () => {
 
         setSubmitted(true)
 
+        console.log(validationErrors)
+
         if (!Object.values(validationErrors).length) {
             const newBooking = {
                 startDate,
@@ -74,6 +79,7 @@ const SingleSpot = () => {
             dispatch(createABookingThunk(spotId, newBooking))
             dispatch(getAllSpotBookingThunk(spotId))
             alert("Spot has been Booked!")
+            history.push(`/user/${sessionUser.id}/bookings`)
         }
     }
 
@@ -117,17 +123,27 @@ const SingleSpot = () => {
                             {validationErrors.today && submitted && (
                                 <p className="errors">{validationErrors.today}</p>
                             )}
-                        <form onSubmit={handleSubmit}>
-                            <div className="check-in-out">
-                                <label>Check-In:
-                                    <input className="date-input" type="date" dateFormat="yyyy/MM/dd" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
-                                </label>
-                                <label>Check-Out:
-                                    <input className="date-input" type="date" dateFormat="yyyy/MM/dd" value={endDate} onChange={(e) => setEndDate(e.target.value)}/>
-                                </label>
-                            </div>
-                            {sessionUser.id === spot.Owner.id ? null : <button className="reserve">Reserve</button> }
-                        </form>
+                            {validationErrors.deny && submitted && (
+                                <p className="errors">{validationErrors.deny}</p>
+                            )}
+                            {validationErrors.same && submitted && (
+                                <p className="errors">{validationErrors.same}</p>
+                            )}
+                        {sessionUser.id !== spot.Owner.id ? (
+                            <form onSubmit={handleSubmit}>
+                                <div className="check-in-out">
+                                    <label>Check-In:
+                                        <input className="date-input" type="date" dateFormat="yyyy/MM/dd" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+                                    </label>
+                                    <label>Check-Out:
+                                        <input className="date-input" type="date" dateFormat="yyyy/MM/dd" value={endDate} onChange={(e) => setEndDate(e.target.value)}/>
+                                    </label>
+                                </div>
+                                <button className="reserve">Reserve</button>
+                            </form>
+                        ) : (
+                            null
+                        )}
                     </div>
                 </div>
                 <div className="reviews-info">

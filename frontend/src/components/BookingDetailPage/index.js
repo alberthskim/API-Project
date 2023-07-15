@@ -43,12 +43,12 @@ function BookingDetailPage() {
           </div>
 
           <div className="spot-container" style={{ display: "flex", flexDirection: "column" }}>
-              <h3>Upcoming Trips</h3>
+              <h3>Upcoming Stays</h3>
               {findFutureBookings[0] ? (
                 <>
                   {findFutureBookings.map((bookingInfo) => (
                   <div className="spots" key={bookingInfo.id}>
-                      <Link to={`/spots/${bookingInfo.SpotId}`} className="spot-details">
+                      <Link to={`/spots/${bookingInfo.Spot.id}`} className="spot-details">
                           <div className="spotimg">
                               <img id="spot-img" src={bookingInfo.Spot.previewImage} alt="" />
                           </div>
@@ -62,7 +62,7 @@ function BookingDetailPage() {
                           <div>Check In: {bookingInfo.startDate.slice(0, 10)}</div>
                           <div>Check Out: {bookingInfo.endDate.slice(0, 10)}</div>
                       </Link>
-                      <button onClick={() => dispatch(deleteABookingThunk(bookingInfo.id))}>Delete Booking</button>
+                      <button onClick={() => dispatch(deleteABookingThunk(bookingInfo.id))}>Cancel Reservation</button>
                   </div>
                   ))}
                 </>
@@ -73,7 +73,7 @@ function BookingDetailPage() {
 
 
       <div className="spot-container" style={{display: "flex", flexDirection:"column"}}>
-          <h3>Previous Trips</h3>
+          <h3>Past Stays</h3>
             {userBooking ? (
                 <>
                   {Object.values(userBooking).map((bookingInfo) =>

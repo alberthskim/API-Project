@@ -543,12 +543,8 @@ router.get("/:spotId/bookings", requireAuth, async (req, res) => {
       where: {
         spotId: req.params.spotId,
       },
-      include: [
-        {
-          model: User,
-          attributes: ["id", "firstName", "lastName", "spotId", "startDate", "endDate"],
-        }
-      ]
+      attributes: ["id", "spotId", "startDate", "endDate"],
+
     });
     return res.json({
       Bookings: bookings,
@@ -563,7 +559,7 @@ router.get("/:spotId/bookings", requireAuth, async (req, res) => {
       include: [
         {
           model: User,
-          attributes: ["id", "firstName", "lastName", "spotId", "startDate", "endDate"],
+          attributes: ["id", "firstName", "lastName", "startDate", "endDate"],
         },
       ],
     });
@@ -609,15 +605,15 @@ router.post("/:spotId/bookings", requireAuth, async (req, res) => {
   }
 
   //you can't add a date in the passed
-  if (
-    Date.parse(startDate) < currentDate ||
-    Date.parse(endDate) < currentDate
-  ) {
-    res.status(400);
-    return res.json({
-      message: "Cannot create a booking to a date in the past!",
-    });
-  }
+  // if (
+  //   Date.parse(startDate) < currentDate ||
+  //   Date.parse(endDate) < currentDate
+  // ) {
+  //   res.status(400);
+  //   return res.json({
+  //     message: "Cannot create a booking to a date in the past!",
+  //   });
+  // }
 
   const bookings = await Booking.findAll({
     where: {
