@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getAllUserBookingThunk } from "../../store/bookings";
+import { deleteABookingThunk, getAllUserBookingThunk } from "../../store/bookings";
 import { Link, useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 
@@ -62,13 +62,14 @@ function BookingDetailPage() {
                           <div>Check In: {bookingInfo.startDate.slice(0, 10)}</div>
                           <div>Check Out: {bookingInfo.endDate.slice(0, 10)}</div>
                       </Link>
+                      <button onClick={() => dispatch(deleteABookingThunk(bookingInfo.id))}>Delete Booking</button>
                   </div>
                   ))}
                 </>
               ) : (
                 <button onClick={() => history.push("/")}>Start Booking Now</button>
               )}
-      </div>
+            </div>
 
 
       <div className="spot-container" style={{display: "flex", flexDirection:"column"}}>
