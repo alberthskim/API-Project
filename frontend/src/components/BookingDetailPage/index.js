@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteABookingThunk, getAllUserBookingThunk } from "../../store/bookings";
+import { getAllUserBookingThunk } from "../../store/bookings";
 import { Link, useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
+import DeleteReservationButton from "./DeleteReservation";
+// import UpdateReservationButton from "./UpdateReservation";
+import OpenModalButton from "../../components/OpenModalButton";
+
 
 
 
@@ -62,7 +66,17 @@ function BookingDetailPage() {
                           <div>Check In: {bookingInfo.startDate.slice(0, 10)}</div>
                           <div>Check Out: {bookingInfo.endDate.slice(0, 10)}</div>
                       </Link>
-                      <button onClick={() => dispatch(deleteABookingThunk(bookingInfo.id))}>Cancel Reservation</button>
+                      {/* <button onClick={() => dispatch(deleteABookingThunk(bookingInfo.id))}>Cancel Reservation</button> */}
+                      {/* <OpenModalButton
+                        className="review-modal-button"
+                        buttonText="Update Reservation"
+                        modalComponent={<UpdateReservationButton bookingInfo={bookingInfo} />}
+                        /> */}
+                      <OpenModalButton
+                        className="review-modal-button"
+                        buttonText="Cancel Reservation"
+                        modalComponent={<DeleteReservationButton bookingInfo={bookingInfo} />}
+                        />
                   </div>
                   ))}
                 </>

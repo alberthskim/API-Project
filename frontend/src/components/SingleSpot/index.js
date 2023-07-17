@@ -85,6 +85,7 @@ const SingleSpot = () => {
 
 
     if(!spot) return null;
+    // if(!sessionUser) return null;
 
     return isLoaded && (
         <div className="single-spot-container">
@@ -129,7 +130,7 @@ const SingleSpot = () => {
                             {validationErrors.same && submitted && (
                                 <p className="errors">{validationErrors.same}</p>
                             )}
-                        {sessionUser.id !== spot.Owner.id ? (
+                        {sessionUser && sessionUser.id !== spot.Owner.id ? (
                             <form onSubmit={handleSubmit}>
                                 <div className="check-in-out">
                                     <label>Check-In:
