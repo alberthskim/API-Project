@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserSpots } from "../../store/spots";
+import { getAllSpots, getUserSpots } from "../../store/spots";
 import { Link, useHistory } from "react-router-dom";
 import OpenModalButton from "../../components/OpenModalButton";
 import DeleteButton from "./DeleteButton.js";
@@ -12,12 +12,13 @@ const UserSpots = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const spotsObj = useSelector((state) => state.spots.allSpots);
-  const spots = Object.values(spotsObj);
+  const spotsToObj = Object.values(spotsObj);
 
-  console.log("spotsObj", spotsObj)
+  const spots = spotsToObj.filter(spot => spot.ownerId === sessionUser.id)
 
   useEffect(() => {
-    dispatch(getUserSpots());
+    // dispatch(getUserSpots());
+    dispatch(getAllSpots())
   }, [dispatch]);
 
   useEffect(() => {

@@ -46,3 +46,67 @@ li {
     z-index: 1;
     background-color: white;
 } */
+
+
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    position: relative;
+    background-color: white;
+    width: 45%;
+    padding: 1rem;
+    border-radius: 5px;
+    /* border: 1px solid red; */
+}
+
+.search-input {
+    outline: none;
+    /* border: none; */
+    border: 1px solid lightgray;
+    width: 100%;
+    padding: .7rem 1rem;
+    border-radius: 8px;
+    /* background-color: lightgray; */
+    /* border: 1px solid green; */
+}
+
+.search-enter {
+    border: none;
+    background-color: white;
+}
+
+.fa-magnifying-glass {
+    font-size: 16px;
+}
+
+.show-search {
+    background-color: white;
+    height: 350px;
+    overflow: auto;
+    position: absolute;
+    top: 3.5rem;
+    border-radius: 4px;
+    left: 0;
+    width: 100%;
+    border: 1px solid gray;
+    z-index: 10;
+}
+
+.search-word {
+  display: flex;
+  gap: 1rem;
+  padding-left: .5rem;
+  padding-top: .5rem;
+}
+
+.search-word:hover {
+    cursor: pointer;
+    background-color: lightgray;
+}
+
+.search-img {
+  height: 50px;
+  width: 50px;
+  object-fit: fill;
+}

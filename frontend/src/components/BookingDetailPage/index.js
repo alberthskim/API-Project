@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllUserBookingThunk } from "../../store/bookings";
 import { Link, useHistory } from "react-router-dom";
-import { useModal } from "../../context/Modal";
 import DeleteReservationButton from "./DeleteReservation";
 // import UpdateReservationButton from "./UpdateReservation";
 import OpenModalButton from "../../components/OpenModalButton";
+import './BookingDetailPage.css'
 
 
 
@@ -46,55 +46,55 @@ function BookingDetailPage() {
             <h1 className="manage">Your Trips</h1>
           </div>
 
-          <div className="spot-container" style={{ display: "flex", flexDirection: "column" }}>
-              <h3>Upcoming Stays</h3>
-              {findFutureBookings[0] ? (
-                <>
-                  {findFutureBookings.map((bookingInfo) => (
-                  <div className="spots" key={bookingInfo.id}>
-                      <Link to={`/spots/${bookingInfo.Spot.id}`} className="spot-details">
-                          <div className="spotimg">
-                              <img id="spot-img" src={bookingInfo.Spot.previewImage} alt="" />
-                          </div>
-                          <div className="spot-details">
-                              <div className="name">{bookingInfo.Spot.name}</div>
-                              <div className="city-state-review">
-                                  {bookingInfo.Spot.address}, {bookingInfo.Spot.city}, {bookingInfo.Spot.state}
-                              </div>
-                          </div>
-                          <div className="country">{bookingInfo.Spot.country}</div>
-                          <div>Check In: {bookingInfo.startDate.slice(0, 10)}</div>
-                          <div>Check Out: {bookingInfo.endDate.slice(0, 10)}</div>
-                      </Link>
-                      {/* <button onClick={() => dispatch(deleteABookingThunk(bookingInfo.id))}>Cancel Reservation</button> */}
-                      {/* <OpenModalButton
-                        className="review-modal-button"
-                        buttonText="Update Reservation"
-                        modalComponent={<UpdateReservationButton bookingInfo={bookingInfo} />}
+          <div className="upcoming-stay" style={{ display: "flex", flexDirection: "column" }}>
+              <h3 style={{color: "#42b729"}}>Upcoming Stays</h3>
+                {findFutureBookings[0] ? (
+                  <>
+                    {findFutureBookings.map((bookingInfo) => (
+                      <div className="stays" key={bookingInfo.id}>
+                        <Link to={`/spots/${bookingInfo.Spot.id}`} className="spot-details">
+                            <div className="spotimg" style={{margin: '1.5rem 0rem'}}>
+                                <img id="spot-img" src={bookingInfo.Spot.previewImage} alt="" />
+                            </div>
+                            <div className="spot-details">
+                                <div className="name">{bookingInfo.Spot.name}</div>
+                                <div className="city-state-review">
+                                    {bookingInfo.Spot.address}, {bookingInfo.Spot.city}, {bookingInfo.Spot.state}
+                                </div>
+                            </div>
+                            <div className="country">{bookingInfo.Spot.country}</div>
+                            <div>Check In: {bookingInfo.startDate.slice(0, 10)}</div>
+                            <div style={{marginBottom: "1.5rem"}}>Check Out: {bookingInfo.endDate.slice(0, 10)}</div>
+                        </Link>
+                        {/* <button onClick={() => dispatch(deleteABookingThunk(bookingInfo.id))}>Cancel Reservation</button> */}
+                        {/* <OpenModalButton
+                          className="review-modal-button"
+                          buttonText="Update Reservation"
+                          modalComponent={<UpdateReservationButton bookingInfo={bookingInfo} />}
                         /> */}
-                      <OpenModalButton
-                        className="review-modal-button"
-                        buttonText="Cancel Reservation"
-                        modalComponent={<DeleteReservationButton bookingInfo={bookingInfo} />}
-                        />
-                  </div>
-                  ))}
-                </>
+                        <OpenModalButton
+                          className="reservation-modal-button"
+                          buttonText="Cancel Reservation"
+                          modalComponent={<DeleteReservationButton bookingInfo={bookingInfo} />}
+                          />
+                    </div>
+                    ))}
+                  </>
               ) : (
-                <button onClick={() => history.push("/")}>Start Booking Now</button>
+                <button style={{width: '12%', padding: "0.5rem 1rem", color: "#ffa500"}}onClick={() => history.push("/")}>Start Booking Now</button>
               )}
             </div>
 
 
       <div className="spot-container" style={{display: "flex", flexDirection:"column"}}>
-          <h3>Past Stays</h3>
+          <h3 style={{color: "#f2512b"}}>Past Stays</h3>
             {userBooking ? (
                 <>
                   {Object.values(userBooking).map((bookingInfo) =>
                       formatForCreation > bookingInfo.startDate && (
                           <div className="spots" key={bookingInfo.id} style={{display: 'grid', gridTemplateColumns: "1fr 1fr 1fr"}}>
                               <Link to={`/spots/${bookingInfo.Spot.id}`} className="spot-details">
-                                  <div className="spotimg">
+                                  <div className="spotimg" style={{margin: '1.5rem 0rem'}}>
                                       <img id="spot-img" src={bookingInfo.Spot.previewImage} alt="" />
                                   </div>
                                   <div className="spot-details">

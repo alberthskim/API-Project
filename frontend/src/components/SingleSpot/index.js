@@ -110,25 +110,25 @@ const SingleSpot = () => {
 
                         </div>
                             {validationErrors.need && submitted && (
-                                <p className="errors">{validationErrors.need}</p>
+                                <p className="errors2">{validationErrors.need}</p>
                             )}
                             {validationErrors.date && submitted && (
-                                <p className="errors">{validationErrors.date}</p>
+                                <p className="errors2">{validationErrors.date}</p>
                             )}
                             {validationErrors.existsOnStart && submitted && (
-                                <p className="errors">{validationErrors.existsOnStart}</p>
+                                <p className="errors2">{validationErrors.existsOnStart}</p>
                             )}
                             {validationErrors.existsOnEnd && submitted && (
-                                <p className="errors">{validationErrors.existsOnEnd}</p>
+                                <p className="errors2">{validationErrors.existsOnEnd}</p>
                             )}
                             {validationErrors.today && submitted && (
-                                <p className="errors">{validationErrors.today}</p>
+                                <p className="errors2">{validationErrors.today}</p>
                             )}
                             {validationErrors.deny && submitted && (
-                                <p className="errors">{validationErrors.deny}</p>
+                                <p className="errors2">{validationErrors.deny}</p>
                             )}
                             {validationErrors.same && submitted && (
-                                <p className="errors">{validationErrors.same}</p>
+                                <p className="errors2">{validationErrors.same}</p>
                             )}
                         {sessionUser && sessionUser.id !== spot.Owner.id ? (
                             <form onSubmit={handleSubmit}>
