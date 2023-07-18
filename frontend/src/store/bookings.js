@@ -84,7 +84,6 @@ const bookingReducer = (state = initialState, action) => {
         }
         case GET_ALL_SPOT_BOOKING: {
             const newState = {...state, user: {...state.user}, spot: {...state.spot}}
-            console.log("This is the payload = action.bookings", action.bookings)
             action.bookings.Bookings.forEach(booking => newState.spot[booking.id] = booking)
             return newState
         }

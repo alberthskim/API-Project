@@ -63,7 +63,6 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
     const user = req.user;
     let { startDate, endDate } = req.body;
     let currentDate = Date.now()
-    console.log(currentDate);
     const booking = await Booking.findByPk(req.params.bookingId)
 
     //Non-existent Spot error - GOOD TO GO
@@ -117,7 +116,7 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
             spotId: spot.id
         }
     })
-    
+
     let bookingErrors = {}
 
     for(let booking of allBookings) {
@@ -153,7 +152,21 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
 //Delete a Booking - DONE
 router.delete('/:bookingId', requireAuth, async (req, res) => {
     const user = req.user
-    let current = Date.now()
+    // let current = Date.now()
+    const todaysDate = new Date()
+    const format = {year: 'numeric', month: '2-digit', day: '2-digit'}
+    const formattedDate = todaysDate.toLocaleDateString(undefined, format)
+
+    const sortFormatFunction = (formatArr) => {
+        const month = formatArr[1];
+        formatArr[1] = formatArr[2];
+        formatArr[2] = month;
+
+        return formatArr.join('-');
+    }
+
+    const formatForCreation = sortFormatFunction(formattedDate.split('/').reverse())
+
     const booking = await Booking.findByPk(req.params.bookingId, {
         include: {
             model: Spot,
@@ -168,7 +181,8 @@ router.delete('/:bookingId', requireAuth, async (req, res) => {
         })
     }
 
-    if(Date.parse(booking.startDate) < current) {
+    // if(Date.parse(booking.startDate) < current) {
+    if((booking.startDate).toString().slice(0,10) < formatForCreation) {
         res.status(403);
         return res.json({
             message: "Bookings that have started or passed can't be deleted!"

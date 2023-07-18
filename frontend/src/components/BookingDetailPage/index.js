@@ -30,8 +30,6 @@ function BookingDetailPage() {
 
     const formatForCreation = sortFormatFunction(formattedDate.split('/').reverse())
 
-
-
     const findFutureBookings = Object.values(userBooking).filter(bookings => formatForCreation < bookings.startDate.slice(0,10))
 
     useEffect(() => {
@@ -75,7 +73,7 @@ function BookingDetailPage() {
                         <OpenModalButton
                           className="reservation-modal-button"
                           buttonText="Cancel Reservation"
-                          modalComponent={<DeleteReservationButton bookingInfo={bookingInfo} />}
+                          modalComponent={<DeleteReservationButton bookingInfo={bookingInfo} date={formatForCreation} />}
                           />
                     </div>
                     ))}

@@ -16,7 +16,6 @@ router.delete('/:imageId', requireAuth, async (req, res) => {
         }
     })
 
-    console.log(spotImages)
 
     if(!spotImages) {
         res.status(404);
