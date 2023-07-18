@@ -108,9 +108,13 @@ img {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
-    padding: 1rem;
+    gap: 2.5rem;
     width: 100%;
+    text-align: center;
+}
+
+.reviews {
+    text-align: center;
 }
 
 .reserve {
@@ -127,3 +131,19 @@ img {
 .reviews {
     width: 100%;
 } */
+
+
+.check-in-out {
+    display: flex;
+    gap: 1rem;
+}
+
+.date-input {
+    text-decoration: none;
+}
+
+.errors2 {
+    color: red;
+    font-size: 14px;
+    text-align: center;
+}
