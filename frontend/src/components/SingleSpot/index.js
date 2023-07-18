@@ -68,7 +68,6 @@ const SingleSpot = () => {
 
         setSubmitted(true)
 
-        console.log(validationErrors)
 
         if (!Object.values(validationErrors).length) {
             const newBooking = {

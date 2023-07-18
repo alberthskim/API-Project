@@ -3,12 +3,16 @@ import { useModal } from "../../context/Modal";
 import { deleteABookingThunk } from "../../store/bookings";
 
 
-const DeleteReservationButton = ({ bookingInfo }) => {
+const DeleteReservationButton = ({ bookingInfo, date }) => {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
 
   const deletehandler = async () => {
-    dispatch(deleteABookingThunk(bookingInfo.id))
+    if ((bookingInfo.startDate).toString().slice(0, 10) === date.toString()) {
+      alert("Cannot Cancel Reservation That Is Happening Today!")
+    } else {
+        dispatch(deleteABookingThunk(bookingInfo.id))
+    }
     closeModal();
   };
 
