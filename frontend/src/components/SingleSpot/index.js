@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { getSingleSpot, getAllSpots, dataReset } from "../../store/spots";
 import './SingleSpot.css'
 import leaf from "../../assets/mapleleaf.png";
 import SpotReviews from "./SpotReviews";
+import {createABookingThunk, getAllSpotBookingThunk} from "../../store/bookings"
 
 
 
@@ -12,21 +13,79 @@ import SpotReviews from "./SpotReviews";
 const SingleSpot = () => {
     const { spotId } = useParams();
     const dispatch = useDispatch();
+    const history = useHistory();
     const spot = useSelector(state => state.spots.singleSpot)
+    const spotBookings = Object.values(useSelector(state => state.bookings.spot));
+    const sessionUser = useSelector(state => state.session.user)
     const [isLoaded, setIsLoaded] = useState(false);
+    const [startDate, setStartDate] = useState("")
+    const [endDate, setEndDate] = useState("")
+    const [submitted, setSubmitted] = useState(false)
+    const [validationErrors, setValidationErrors] = useState({});
 
     useEffect(() => {
         dispatch(getSingleSpot(spotId))
+        dispatch(getAllSpotBookingThunk(spotId))
         dispatch(getAllSpots()).then(() => setIsLoaded(true))
         return () => dispatch(dataReset())
     }, [dispatch])
 
-    const handleReserve = () => {
-        alert("Feature Coming Soon")
-    };
+
+    useEffect(() => {
+        let errors = {};
+        const todaysDate = new Date()
+        const format = {year: 'numeric', month: '2-digit', day: '2-digit'}
+        const formattedDate = todaysDate.toLocaleDateString(undefined, format)
+        const formatForCreation = sortFormatFunction(formattedDate.split('/').reverse())
+
+        if (!startDate || !endDate) errors.need = "Must Input A Start And End Date."
+        if (startDate > endDate) errors.deny = "End Date Cannot Be Before Start Date."
+        if (startDate === endDate) errors.same = "Start Date and End Date Can't Be The Same."
+        if ((startDate && startDate < formatForCreation) || (endDate && endDate < formatForCreation)) errors.date = "Cannot Create Reservation In The Past."
+        if (startDate === formatForCreation) errors.today = "Cannot Book Last Minute!"
+
+        for (let i = 0; i < spotBookings.length; i++) {
+            let current = spotBookings[i]
+            if (((current.startDate).toString().slice(0, 10) <= startDate) && (startDate <= (current.endDate).toString().slice(0, 10))) errors.existsOnStart = "Booking already exists between those start dates."
+            if (((current.startDate).toString().slice(0, 10) <= endDate) && (endDate <= (current.endDate).toString().slice(0, 10))) errors.existsOnEnd = "Booking already exists between those end dates."
+        }
+
+        setValidationErrors(errors);
+    }, [startDate, endDate])
+
+    const sortFormatFunction = (formatArr) => {
+        const month = formatArr[1];
+        formatArr[1] = formatArr[2];
+        formatArr[2] = month;
+
+        return formatArr.join('-');
+    }
+
+
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+
+        setSubmitted(true)
+
+        console.log(validationErrors)
+
+        if (!Object.values(validationErrors).length) {
+            const newBooking = {
+                startDate,
+                endDate
+            }
+
+            dispatch(createABookingThunk(spotId, newBooking))
+            dispatch(getAllSpotBookingThunk(spotId))
+            alert("Spot has been Booked!")
+            history.push(`/user/${sessionUser.id}/bookings`)
+        }
+    }
 
 
     if(!spot) return null;
+    // if(!sessionUser) return null;
 
     return isLoaded && (
         <div className="single-spot-container">
@@ -50,7 +109,42 @@ const SingleSpot = () => {
                         <span className="reviews"><img src={leaf} className="leaf"/> {spot.avgStarRating !== "NaN" ? Number(spot.avgStarRating).toFixed(1) : "New"} {spot.numReviews === 0 ? null : (spot.numReviews <= 1 ? `• ${spot.numReviews} Review` : `• ${spot.numReviews} Reviews`)}</span>
 
                         </div>
-                        <button onClick={handleReserve} className="reserve">Reserve</button>
+                            {validationErrors.need && submitted && (
+                                <p className="errors2">{validationErrors.need}</p>
+                            )}
+                            {validationErrors.date && submitted && (
+                                <p className="errors2">{validationErrors.date}</p>
+                            )}
+                            {validationErrors.existsOnStart && submitted && (
+                                <p className="errors2">{validationErrors.existsOnStart}</p>
+                            )}
+                            {validationErrors.existsOnEnd && submitted && (
+                                <p className="errors2">{validationErrors.existsOnEnd}</p>
+                            )}
+                            {validationErrors.today && submitted && (
+                                <p className="errors2">{validationErrors.today}</p>
+                            )}
+                            {validationErrors.deny && submitted && (
+                                <p className="errors2">{validationErrors.deny}</p>
+                            )}
+                            {validationErrors.same && submitted && (
+                                <p className="errors2">{validationErrors.same}</p>
+                            )}
+                        {sessionUser && sessionUser.id !== spot.Owner.id ? (
+                            <form onSubmit={handleSubmit}>
+                                <div className="check-in-out">
+                                    <label>Check-In:
+                                        <input className="date-input" type="date" dateFormat="yyyy/MM/dd" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+                                    </label>
+                                    <label>Check-Out:
+                                        <input className="date-input" type="date" dateFormat="yyyy/MM/dd" value={endDate} onChange={(e) => setEndDate(e.target.value)}/>
+                                    </label>
+                                </div>
+                                <button className="reserve">Reserve</button>
+                            </form>
+                        ) : (
+                            null
+                        )}
                     </div>
                 </div>
                 <div className="reviews-info">
